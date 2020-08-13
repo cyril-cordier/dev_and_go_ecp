@@ -1,15 +1,15 @@
 <template>
   <div class="users">
-    <h1>Gestion utilisateurs</h1>
+    <h1>Gestion joueurs challenge</h1>
     
                  
         
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".useraddmodal">+ Ajouter un Utilisateur</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".useraddmodal">+ Ajouter un joueur</button>
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Id</th>
-                <th>Nom</th>
+                <th>Nom du joueur</th>
                 <th>Prénom</th>
                 <th>Email</th>
                 <th>Nom pour Challenge</th>
@@ -28,7 +28,7 @@
                     <i v-on:click="onDelete(user.id, index)" class="fa fa-trash"></i>
                   </a> |
                   <a href="#" class="icon">
-                    <i  @click="id=user.id" class="fas fa-edit" data-toggle="modal" :data-target="'#usereditmodal'+user.id"></i>
+                    <i v-on:click="onEdit(user.id)" class="fas fa-edit" data-toggle="modal" data-target=".usereditmodal"></i>
                   </a>
                   <!-- <router-link 
                     :to="{
@@ -43,11 +43,11 @@
 <!-- Edit User modal -->
 
 
-          <div class="modal fade" :id="'usereditmodal'+user.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+          <div class="modal fade usereditmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit.prevent="onEdit(user)" class="sign-back">
+                <form @submit="onEdit" class="sign-back">
                   <h1>Modification Utilisateur</h1>
                   <div class="signup-row">
                     <i class="fa fa-user"></i>
@@ -153,7 +153,6 @@
     },
     data() {
       return {
-        id:'',
         lastname: '',
         firstname: '',
         email: '',
@@ -172,7 +171,7 @@
     },
     methods: {
 
-      ...mapActions(['registerForm', 'createForm', 'fetchUser', 'fetchAllUsers', 'fetchUserById', 'deleteUser', 'editForm']),
+      ...mapActions(['registerForm', 'createForm', 'fetchUser', 'fetchAllUsers', 'fetchUserById', 'deleteUser', 'editUser']),
       onsubmit() {
         //e.preventDefault();
         var obj = {
@@ -186,16 +185,14 @@
         this.registerForm(obj);
 
       },
-      onEdit(user) {
+      onEdit() {
         //e.preventDefault();
         var obj = {
-          'id':user.id,
-          'firstname': user.firstname,
-          'lastname': user.lastname,
-          'email': user.email,
-          'challengename': user.challengename
+          'firstname': this.firstname,
+          'lastname': this.lastname,
+          'email': this.email,
         }
-        this.editForm(obj);
+        this.editUser(obj);
 
       },
       onDelete(id, index) {

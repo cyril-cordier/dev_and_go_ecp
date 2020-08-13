@@ -29,7 +29,7 @@
                     <i v-on:click="onDelete(product.id, index)" class="fa fa-trash"></i>
                   </a> |
                   <a href="#" class="icon">
-                    <!-- <i v-on:click="onEdit(user.id, index)" class="fas fa-edit"></i> -->
+                    <i  @click="id=product.id" class="fas fa-edit" data-toggle="modal" :data-target="'#producteditmodal'+product.id"></i>
                   </a>
                   <!-- <router-link 
                     :to="{
@@ -45,23 +45,23 @@
               <!-- Edit Products modal -->
 
 
-          <div class="modal fade producteditmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+          <div class="modal fade" :id="'producteditmodal'+product.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit="onEdit" class="sign-back">
+                <form @submit.prevent="onProductEdit(product)" class="sign-back">
                   <h1>Modification produit</h1>
                   <div class="signup-row">
                     
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="product.name">
+                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="product.name"></textarea>
                   </div>
                   <div class="signup-row">
                     
-                    <input type="textarea" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="product.details">
+                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="product.details"></textarea>
                   </div>
                   <div class="signup-row">
                     
-                    <input type="text" v-model="product.price" name="" value="" placeholder="Prix">
+                    <textarea class="form-control" v-model="product.price" name="" value="" placeholder="Prix"></textarea>
                   </div>
                   <div class="signup-row">
                     
@@ -87,23 +87,23 @@
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit="onsubmit" class="sign-back">
+                <form @submit="onProductsubmit" class="sign-back">
                   <h1>Ajout produit</h1>
                   <div class="signup-row">
                     
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="name">
+                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="name"></textarea>
                   </div>
                   <div class="signup-row">
                     
-                    <input type="textarea" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="details">
+                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="details"></textarea>
                   </div>
                   <div class="signup-row">
                     
-                    <input type="text" v-model="price" name="" value="" placeholder="Prix">
+                    <textarea class="form-control" v-model="price" name="" value="" placeholder="Prix"></textarea>
                   </div>
                   <div class="signup-row">
                     
-                    <input type="image" v-model="password" name="" value="" placeholder="Image">
+                    <input type="text" class="form-control" v-model="image" name="" value="" placeholder="Image">
                   </div>
 
 
@@ -151,24 +151,18 @@
     },
     data() {
       return {
+        id: '',
         name: '',
         details: '',
         price: '',
         image: '',
-        editProduct: {
-          'id': '',
-          'name': '',
-          'details': '',
-          'price': '',
-          'image': ''
-
-        }
+        
       }
     },
     methods: {
 
-      ...mapActions(['registerProduct', 'fetchProduct', 'fetchAllProducts', 'fetchProductById', 'deleteProduct']),
-      onsubmit(e) {
+      ...mapActions(['registerProduct', 'fetchProduct', 'fetchAllProducts', 'fetchProductById', 'deleteProduct', 'createProduct', 'editProduct']),
+      onProductsubmit(e) {
         e.preventDefault();
         var obj = {
           'name': this.name,
@@ -177,16 +171,17 @@
           'image': this.image,
 
         }
-        this.createForm(obj);
+        this.createProduct(obj);
 
       },
-      onEdit(e) {
-        e.preventDefault();
+      onProductEdit(product) {
+        //e.preventDefault();
         var obj = {
-          'name': this.name,
-          'details': this.details,
-          'price': this.price,
-          'image': this.image,
+          'id':product.id,
+          'name': product.name,
+          'details': product.details,
+          'price': product.price,
+          'image': product.image,
         }
         this.editProduct(obj);
 

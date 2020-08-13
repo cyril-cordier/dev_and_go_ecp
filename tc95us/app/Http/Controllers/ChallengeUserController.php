@@ -50,6 +50,7 @@ class ChallengeUserController extends Controller
         $challengeuser->matchaverage = $request->input('matchaverage');
         $challengeuser->setaverage = $request->input('setaverage');
         $challengeuser->gameaverage = $request->input('gameaverage');
+        $challengeuser->gameaverage = $request->input('visible');
         
        
         $challengeuser->save();
@@ -66,6 +67,7 @@ class ChallengeUserController extends Controller
             'matchaverage' => $challengeuser->matchaverage,
             'setaverage' => $challengeuser->setaverage,
             'gameaverage' => $challengeuser->gameaverage,
+            'visible' => $challengeuser->visible,
             'success' => 'challenge user updated with success !'
         
         ], $this-> successStatus); 
@@ -86,6 +88,7 @@ class ChallengeUserController extends Controller
             'matchaverage' => $challengeuser->matchaverage,
             'setaverage' => $challengeuser->setaverage,
             'gameaverage' => $challengeuser->gameaverage,
+            'visible' => $challengeuser->visible,
         ]);
     }
 

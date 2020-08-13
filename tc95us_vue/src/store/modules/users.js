@@ -106,23 +106,30 @@ const actions = {
     },
     // EDIT USER 
     async editForm({commit},form){
-      var formdata = new FormData();
-      formdata.append("lastname", form.lastname);
-      formdata.append("firstname", form.firstname);
-      formdata.append("email", form.email);
+      var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            myHeaders.append('Content-Type','application/json');
+            var raw=JSON.stringify({
+              "lastname": form.lastname,
+              "firstname": form.firstname,
+              "email": form.email,
+              "challengename": form.challengename,
+            });
       
    
       var requestOptions = {
         method: 'PUT',
-        body: formdata,
+        headers: myHeaders,
+        body: raw,
         redirect: 'follow'
       };
       
-      fetch("http://localhost:8000/api/users/update", requestOptions)
+      fetch(`http://localhost:8000/api/users/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateMessage',result);
-
+            location.reload();
            
           })
         .catch(error => console.log('error', error));

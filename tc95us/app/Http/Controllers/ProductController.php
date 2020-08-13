@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Products;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller; 
 use Validator;
 
 class ProductController extends Controller
@@ -40,16 +41,9 @@ class ProductController extends Controller
         return response()->json(['success'=>'Product successfully added'], $this-> successStatus); 
     }
 
-    public function update(Request $request, $id){
-        $product = Products::find($id);
+    public function update(Request $request, Products $product){
 
-        $product->name = $request->input('name');
-        $product->details = $request->input('details');
-        $product->price = $request->input('price');
-        $product->image = $request->input('image');
-        
-       
-        $product->save();
+        $product->update($request->all());
         
         
 

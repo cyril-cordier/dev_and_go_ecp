@@ -2,6 +2,7 @@ const token = window.localStorage.getItem('token') || "";
 
 const state = {
     message:[],
+    createmessage:[],
     updatemessage:[],
     product:[],
     products:[],
@@ -14,6 +15,8 @@ const state = {
 
 const getters = {
     getMessage:(state) =>(state.message),
+    getUpdateMessage:(state)=>(state.updatemessage),
+    getCreateMessage:(state)=>(state.createmessage),
     getProduct:(state) =>(state.product),
     infoProductById:(state) =>(state.ProductById),
     getAllProducts:(state)=> (state.products),
@@ -23,49 +26,57 @@ const getters = {
 const actions = {
    
     // CREATE
-    async createForm({commit},form){
+    async createProduct({commit},form){
+      var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${token}`);
         var formdata = new FormData();
         formdata.append("name", form.name);
         formdata.append("details", form.details);
         formdata.append("price", form.price);
-        //formdata.append("image", form.image);
+        formdata.append("image", form.image);
         
      
         var requestOptions = {
           method: 'POST',
+          headers: myHeaders,
           body: formdata,
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/products/create", requestOptions)
+        fetch("http://localhost:8000/api/products", requestOptions)
           .then(response => response.json())
           .then(result =>  {
-              commit('createrMessage',result);
-
+              commit('createMessage',result);
+              location.reload();
              
             })
           .catch(error => console.log('error', error));
     },
     
     // EDIT
-    async editForm({commit},form){
-      var formdata = new FormData();
-      formdata.append("name", form.name);
-      formdata.append("details", form.details);
-      formdata.append("price", form.price);
-      formdata.append("image", form.image);
+    async editProduct({commit},form){
+      var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${token}`);
+            myHeaders.append('Content-Type','application/json');
+            var raw=JSON.stringify({
+              "name": form.name,
+              "details": form.details,
+              "price": form.price,
+              "image": form.image,
+            });
    
       var requestOptions = {
         method: 'PUT',
-        body: formdata,
+        headers: myHeaders,
+        body: raw,
         redirect: 'follow'
       };
       
-      fetch("http://localhost:8000/api/products/update", requestOptions)
+      fetch(`http://localhost:8000/api/products/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateMessage',result);
-
+            location.reload();
            
           })
         .catch(error => console.log('error', error));

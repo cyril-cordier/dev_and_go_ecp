@@ -15,8 +15,9 @@ class CreateChallengeUsersTable extends Migration
     {
         Schema::create('challenge_users', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
+            $table->string('challengename');
             $table->string('contact');
+            $table->string('ranking');
             $table->string('points');
             $table->string('nbmatchs');
             $table->string('matchaverage');

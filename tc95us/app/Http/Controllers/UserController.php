@@ -81,9 +81,8 @@ public $successStatus = 200;
 
     } 
 
-    public function update(Request $request, $id){
-        $user = User::find($id);
-
+    public function update(Request $request, User $user){
+       
         $validator = Validator::make($request->all(),[ 
             'challengename' => ['unique:users,challengename,'.$user->id],
             'email' => ['unique:users,email,'.$user->id],
@@ -93,15 +92,8 @@ public $successStatus = 200;
             return response()->json(['error'=>$validator->errors()], 401);            
         }
        
-        $user->challengename = $request->input('challengename');
-        $user->firstname = $request->input('firstname');
-        $user->lastname = $request->input('lastname');
-        $user->email = $request->input('email');
-        $user->password = $request->input('password');
-        
-       
-        $user->save();
-        
+        $user->update($request->all());
+     
         
 
         return response()->json([

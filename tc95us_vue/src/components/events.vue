@@ -98,23 +98,24 @@
             <h1>Ajout Evennement</h1>
             <div class="signup-row">
 
-              <input type="text" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="title">
+              <textarea class="form-control" name="" value="" id="eventtitle" placeholder="Nom" v-model="title"></textarea>
+            </div>
+            <div class="signup-row">
+              <!-- <label for="details" class="control-label">Details</label> -->
+              <textarea class="form-control" name="" value="" id="details" placeholder="Détails" v-model="details"></textarea>
+              <!-- <input type="message-text" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="details"> -->
             </div>
             <div class="signup-row">
 
-              <input type="textarea" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="details">
+              <textarea class="form-control" name="" value="" v-model="place" placeholder="Lieu"></textarea>
             </div>
             <div class="signup-row">
 
-              <input type="text" v-model="place" name="" value="" placeholder="Lieu">
+              <textarea class="form-control" v-model="price" name="" value="" placeholder="Prix"></textarea>
             </div>
             <div class="signup-row">
 
-              <input type="text" v-model="price" name="" value="" placeholder="Prix">
-            </div>
-            <div class="signup-row">
-
-              <input type="image" v-model="password" name="" value="" placeholder="Image">
+              <input type="image" v-model="image" name="" value="" placeholder="Image">
             </div>
 
 
@@ -167,16 +168,7 @@
         place:'',
         price: '',
         image: '',
-        editEvent: {
-          'id': '',
-          'title': '',
-          'details': '',
-          'place':'',
-          'price': '',
-          'image': '', 
-          'file': '',
-
-        }
+        
       }
     },
     methods: {
