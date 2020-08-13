@@ -11,6 +11,7 @@ const state = {
     teamById:[],
     sendPokemonMessage:[],
     UserById:[],
+    deleteUserById:[],
     addPokemon:[],
 
    
@@ -29,6 +30,7 @@ const getters = {
     getTeamById:(state) =>(state.teamById),
     getSendMessage:(state)=>(state.sendPokemonMessage),
     addPokemonMessage:(state)=>(state.addPokemonMessage),
+    deleteUserById:(state)=>(state.deleteUserById),
 }
 
 const actions = {
@@ -127,12 +129,12 @@ const actions = {
     // REGISTER 
     async registerForm({commit},form){
         var formdata = new FormData();
-        formdata.append("name", form.name);
+        formdata.append("lastname", form.lastname);
+        formdata.append("firstname", form.firstname);
         formdata.append("email", form.email);
         formdata.append("password", form.password);
         formdata.append("c_password", form.c_password);
-        formdata.append("team", form.team);
-        formdata.append("profil_icon_id", form.profil_icon_id);
+        
      
         var requestOptions = {
           method: 'POST',
@@ -145,29 +147,6 @@ const actions = {
           .then(result =>  {
               commit('registerMessage',result);
               if(!result.error){
-                
-                var obj = {
-                  'id' : Math.floor(Math.random() * 152),
-                  'team': form.team,
-                }
-                var myHeaders = new Headers();
-
-
-                var formdata = new FormData();
-                formdata.append("team_name", obj.team);
-                formdata.append("pokemon_id", obj.id);
-          
-                var requestOptions = {
-                  method: 'POST',
-                  headers: myHeaders,
-                  body: formdata,
-                  redirect: 'follow'
-                };
-          
-                fetch("http://localhost:8000/api/pokemon/add", requestOptions)
-                .then(response => response.json())
-                .catch(error => console.log('error', error));
-                window.location.href="/login";
               }
              
             })
@@ -194,11 +173,35 @@ const actions = {
             commit('loginMessage',result);
             window.localStorage.setItem('token',result.success.token);
             if(!result.error){
-              window.location.href="/egg";
+              window.location.href="/MonCompte";
             }
           })
         .catch(error => console.log('error', error));
     },
+    // EDIT USER 
+    async editForm({commit},form){
+      var formdata = new FormData();
+      formdata.append("lastname", form.lastname);
+      formdata.append("firstname", form.firstname);
+      formdata.append("email", form.email);
+      
+   
+      var requestOptions = {
+        method: 'PUT',
+        body: formdata,
+        redirect: 'follow'
+      };
+      
+      fetch("http://localhost:8000/api/users/update", requestOptions)
+        .then(response => response.json())
+        .then(result =>  {
+            commit('registerMessage',result);
+            if(!result.error){
+            }
+           
+          })
+        .catch(error => console.log('error', error));
+  },
 
     // FETCH TEAM 
 
@@ -274,6 +277,28 @@ const actions = {
                   })
                   .catch(error => console.log('error', error));
                       },
+
+    // DELETE USER BY ID
+    async deleteUser({commit},id){
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+
+      var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      
+      redirect: 'follow'
+      };
+
+      fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        commit('deleteUserById',result);
+
+      })
+      .catch(error => console.log('error', error));
+          },
+
         //FETCH ALL USERS
      async fetchAllUsers({commit}){
             var myHeaders = new Headers();
@@ -336,6 +361,7 @@ fetchAllUsers:(state,users)=>(state.users = users),
 fetchTeamById:(state,teamById) => (state.teamById = teamById),
 sendPokemon:(state,sendPokemonMessage)=>(state.sendPokemonMessage = sendPokemonMessage),
 UserById:(state,UserById)=>(state.UserById = UserById),
+deleteUserById:(state,deleteUserById)=>(state.deleteUserById = deleteUserById),
 addPokemonMessage:(state,addPokemonMessage) =>(state.addPokemonMessage = addPokemonMessage),
 
 }

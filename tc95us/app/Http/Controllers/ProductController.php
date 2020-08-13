@@ -26,7 +26,7 @@ class ProductController extends Controller
             'name' => 'required', 
             'details' => 'required', 
             'price' => 'required',
-            'image' => 'required', 
+            //'image' => 'required', 
         ]);
 
 

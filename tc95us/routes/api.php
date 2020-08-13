@@ -32,7 +32,8 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::post('users/me','UserController@updateUser'); 
         Route::resource('products','ProductController');
         Route::resource('contents','ContentController');
-        Route::resource('championnats','ChampionnatsController');
+        Route::resource('events','EventController');
+        Route::resource('championnats','ChampionnatController');
         Route::resource('challenge_users','ChallengeUserController');
 
 

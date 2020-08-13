@@ -10,7 +10,7 @@ class ChampionnatController extends Controller
     public $successStatus = 200;
 
     public function index(){
-        $matchs = Matchs::all();
+        $matchs = Championnats::all();
        
        return $matchs;
 
@@ -34,13 +34,13 @@ class ChampionnatController extends Controller
         }
         $input = $request->all(); 
        
-        Matchs::create($input);
+        Championnats::create($input);
         
         return response()->json(['success'=>'match successfully added'], $this-> successStatus); 
     }
 
     public function update(Request $request, $id){
-        $match = Matchs::find($id);
+        $match = Championnats::find($id);
 
         $match->date = $request->input('date');
         $match->competition = $request->input('competition');
@@ -66,7 +66,7 @@ class ChampionnatController extends Controller
 
     public function edit($id)
     {
-        $match = Matchs::findOrFail($id);
+        $match = Championnats::findOrFail($id);
 
         return response()->json([
             'id' => $match->id,
@@ -78,7 +78,7 @@ class ChampionnatController extends Controller
     }
 
     public function destroy($id){
-        $match = Matchs::find($id);
+        $match = Championnats::find($id);
         $match->delete();
 
         return response()->json([
