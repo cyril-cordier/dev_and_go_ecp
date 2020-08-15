@@ -23,7 +23,8 @@ class CreateChallengesTable extends Migration
             $table->integer('S2L')->nullable();
             $table->integer('S3W')->nullable();
             $table->integer('S3L')->nullable();
-            $table->integer('points');
+            $table->integer('pointsW');
+            $table->integer('pointsL');
             $table->string('details')->nullable();
             $table->timestamps();
         });

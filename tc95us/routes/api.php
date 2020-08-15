@@ -34,7 +34,10 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::resource('contents','ContentController');
         Route::resource('events','EventController');
         Route::resource('championnats','ChampionnatController');
-        Route::resource('challenge_users','ChallengeUserController');
+        Route::resource('challengeusers','ChallengeUserController');
+        Route::resource('challengeresults','ChallengeResultController');
+        Route::resource('tarifs','TarifController');
+        Route::resource('office','OfficeController');
 
 
 

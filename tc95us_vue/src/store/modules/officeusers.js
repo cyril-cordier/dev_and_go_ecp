@@ -1,40 +1,35 @@
 const token = window.localStorage.getItem('token') || "";
 
 const state = {
-    eventmessage:[],
-    updateeventmessage:[],
-    event:[],
-    events:[],
-    eventById:[],
-    deleteEventById:[],
+    officeusermessage:[],
+    updateofficeusermessage:[],
+    officeuser:[],
+    officeusers:[],
+    OfficeuserById:[],
+    deleteOfficeuserById:[],
 
    
 
 }
 
 const getters = {
-  getEventMessage:(state) =>(state.eventmessage),
-  getUpdateEventMessage:(state)=>(state.updateeventmessage), 
-  getEvent:(state) =>(state.event),
-  infoEventById:(state) =>(state.EventById),
-  getAllEvents:(state)=> (state.events),
+    getOfficeuserMessage:(state) =>(state.officeusermessage),
+    getUpdateOfficeuserMessage:(state)=>(state.updateofficeusermessage),
+    getOfficeuser:(state) =>(state.officeuser),
+    infoOfficeuserById:(state) =>(state.OfficeuserById),
+    getAllOfficeusers:(state)=> (state.officeusers),
 }
 
 const actions = {
    
     // CREATE
-    async createEvent({commit},form){
+    async createOfficeuser({commit},form){
       var myHeaders = new Headers();
-            myHeaders.append("Authorization", `Bearer ${token}`);  
-      var formdata = new FormData();
-        formdata.append("title", form.title);
-        formdata.append("details", form.details);
-        formdata.append("place", form.place);
-        formdata.append("date", form.date);
-        formdata.append("hour", form.hour);
-        formdata.append("price", form.price);
+            myHeaders.append("Authorization", `Bearer ${token}`);
+        var formdata = new FormData();
+        formdata.append("name", form.name);
+        formdata.append("fonction", form.fonction);
         formdata.append("image", form.image);
-       
         
      
         var requestOptions = {
@@ -44,29 +39,24 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/events", requestOptions)
+        fetch("http://localhost:8000/api/office", requestOptions)
           .then(response => response.json())
           .then(result =>  {
-              commit('createEventMessage',result);
+              commit('createOfficeuserMessage',result);
               /* location.reload(); */
-
              
             })
           .catch(error => console.log('error', error));
     },
     
     // EDIT
-    async editEvent({commit},form){
+    async editOfficeuser({commit},form){
       var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
             myHeaders.append('Content-Type','application/json');
             var raw=JSON.stringify({
-              "title": form.title,
-              "details": form.details,
-              "place": form.place,
-              "date": form.date,
-              "hour": form.hour,
-              "price": form.price,
+              "name": form.name,
+              "fonction": form.fonction,
               "image": form.image,
             });
    
@@ -77,11 +67,11 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/events/${form.id}`, requestOptions)
+      fetch(`http://localhost:8000/api/office/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
-            commit('updateEventMessage',result);
-            //location.reload();
+            commit('updateOfficeuserMessage',result);
+            location.reload();
            
           })
         .catch(error => console.log('error', error));
@@ -90,7 +80,7 @@ const actions = {
    
       
 // FETCH BY ID
-    async fetchEventById({commit},id){
+    async fetchOfficeuserById({commit},id){
                   var myHeaders = new Headers();
                   myHeaders.append("Authorization", `Bearer ${token}`);
       
@@ -101,17 +91,17 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/events/${id}`, requestOptions)
+                  fetch(`http://localhost:8000/api/office/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
-                    commit('EventById',result);
+                    commit('OfficeuserById',result);
     
                   })
                   .catch(error => console.log('error', error));
                       },
 
     // DELETE BY ID
-    async deleteEvent({commit},id){
+    async deleteOfficeuser({commit},id){
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -122,17 +112,17 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/events/${id}`, requestOptions)
+      fetch(`http://localhost:8000/api/office/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        commit('deleteEventById',result);
+        commit('deleteOfficeuserById',result);
 
       })
       .catch(error => console.log('error', error));
           },
 
         //FETCH ALL
-     async fetchAllEvents({commit}){
+     async fetchAllOfficeusers({commit}){
             var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -143,9 +133,9 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/events/", requestOptions)
+            fetch("http://localhost:8000/api/office/", requestOptions)
             .then(response => response.json())
-            .then(result => commit('fetchAllEvents',result))
+            .then(result => commit('fetchAllOfficeusers',result))
             .catch(error => console.log('error', error));
                 },
 
@@ -153,12 +143,12 @@ const actions = {
   
 
 const mutations = {
-createEventMessage:(state,eventmessage)=>(state.eventmessage = eventmessage),
-updateEventMessage:(state,updateeventmessage)=>(state.updateeventmessage = updateeventmessage),
-fetchEvent:(state,event) =>(state.event = event),
-fetchAllEvents:(state,events)=>(state.events = events),
-EventById:(state,EventById)=>(state.EventById = EventById),
-deleteEventById:(state,deleteeventById)=>(state.deleteEventById = deleteeventById),
+createOfficeuserMessage:(state,officeusermessage)=>(state.officeusermessage = officeusermessage),
+updateOfficeuserMessage:(state,updateofficeusermessage)=>(state.updateofficeusermessage = updateofficeusermessage),
+fetchOfficeuser:(state,officeuser) =>(state.officeuser = officeuser),
+fetchAllOfficeusers:(state,officeusers)=>(state.officeusers = officeusers),
+OfficeuserById:(state,OfficeuserById)=>(state.OfficeuserById = OfficeuserById),
+deleteOfficeuserById:(state,deleteOfficeuserById)=>(state.deleteOfficeuserById = deleteOfficeuserById),
 
 }
 

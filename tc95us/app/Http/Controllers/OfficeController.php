@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Office;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Validator;
 
 class OfficeController extends Controller
@@ -10,22 +11,20 @@ class OfficeController extends Controller
     public $successStatus = 200;
 
     public function index(){
-        $officeusers = Office::all();
+        $office = Office::all();
        
-       return $officeusers;
+       return $office;
 
     }
 
-    public function show(Office $officeusers){
-        return $officeusers;
+    public function show(Office $office){
+        return $office;
     }
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [ 
-            'username' => 'required',
-            'ranking' => 'required',
-            'contact' => 'required',  
-            'points' => 'required',
+            'name' => 'required',
+            'fonction' => 'required',
         ]);
 
 
@@ -36,37 +35,21 @@ class OfficeController extends Controller
        
         Office::create($input);
         
-        return response()->json(['success'=>'challenge user successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Office user successfully added'], $this-> successStatus); 
     }
 
-    public function update(OfficeRequest $request, $id){
-        $officeuser = Office::find($id);
-
-        $officeuser->username = $request->input('username');
-        $officeuser->ranking = $request->input('ranking');
-        $officeuser->contact = $request->input('contact');
-        $officeuser->points = $request->input('points');
-        $challengofficeuseruser->nbmatchs = $request->input('nbmatchs');
-        $officeuser->matchaverage = $request->input('matchaverage');
-        $officeuser->setaverage = $request->input('setaverage');
-        $officeuser->gameaverage = $request->input('gameaverage');
+    public function update(Request $request, Office $office){
         
-       
-        $challengeuser->save();
+        $office->update($request->all());
         
         
 
         return response()->json([
-            'id' => $officeuser->id,
-            'username' => $officeuser->username,
-            'ranking' => $officeuser->ranking,
-            'contact' => $officeuser->contact,
-            'points' => $officeuser->points,
-            'nbmatchs' => $officeuser->nbmatchs,
-            'matchaverage' => $officeuser->matchaverage,
-            'setaverage' => $officeuser->setaverage,
-            'gameaverage' => $officeuser->gameaverage,
-            'success' => 'challenge user updated with success !'
+            'id' => $office->id,
+            'name' => $office->name,
+            'fonction' => $office->fonction,
+            'image' => $office->image,
+            'success' => 'Office user updated with success !'
         
         ], $this-> successStatus); 
 
@@ -74,24 +57,19 @@ class OfficeController extends Controller
 
     public function edit($id)
     {
-        $challengeuser = Office::findOrFail($id);
+        $office = Office::findOrFail($id);
 
         return response()->json([
-            'id' => $officeuser->id,
-            'username' => $officeuser->username,
-            'ranking' => $officeuser->ranking,
-            'contact' => $officeuser->contact,
-            'points' => $officeuser->points,
-            'nbmatchs' => $officeuser->nbmatchs,
-            'matchaverage' => $officeuser->matchaverage,
-            'setaverage' => $officeuser->setaverage,
-            'gameaverage' => $officeuser->gameaverage,
+            'id' => $office->id,
+            'name' => $office->name,
+            'fonction' => $office->fonction,
+            'image' => $office->image
         ]);
     }
 
     public function destroy($id){
-        $officeuser = Office::find($id);
-        $officeuser->delete();
+        $office = Office::find($id);
+        $office->delete();
 
         return response()->json([
             'success' => 'challenge user successfully deleted'

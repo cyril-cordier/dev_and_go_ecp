@@ -129,7 +129,7 @@ const actions = {
         .then(response => response.json())
         .then(result =>  {
             commit('updateMessage',result);
-            location.reload();
+            //location.reload();
            
           })
         .catch(error => console.log('error', error));

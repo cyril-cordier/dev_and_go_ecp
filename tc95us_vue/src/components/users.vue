@@ -29,18 +29,41 @@
                   </a> |
                   <a href="#" class="icon">
                     <i  @click="id=user.id" class="fas fa-edit" data-toggle="modal" :data-target="'#usereditmodal'+user.id"></i>
+                  </a> |
+                  <a href="#" class="icon">
+                    <i  @click="id=user.id" class="fas fa-eye" data-toggle="modal" :data-target="'#usershowmodal'+user.id"></i>
                   </a>
-                  <!-- <router-link 
-                    :to="{
-                      name:'Userinfo', 
-                      params:{id: product.id}
-                    }" 
-                    class="icon"
-                    >
-                      <i class="far fa-eye"></i>
-                    </router-link> -->
                 </th>
-<!-- Edit User modal -->
+<!-- Show User modal -->
+
+
+          <div class="modal fade" :id="'usershowmodal'+user.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <form @submit.prevent="onEdit(user)" class="sign-back">
+                  <h6>Detail Utilisateur</h6>
+                  <div class="signup-row">
+                    <h3>{{user.firstname}} {{user.lastname}}</h3>
+                  </div>
+                  <div class="signup-row">
+                    <h6>{{user.email}}</h6>
+                  </div>
+                  <div class="signup-row">
+                    <h6>Nom pour challenge :{{user.challengename}}</h6>
+                  </div>
+
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button @click="id=user.id" data-toggle="modal" :data-target="'#usereditmodal'+user.id" class="btn btn-primary">Modifier</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit User modal -->
 
 
           <div class="modal fade" :id="'usereditmodal'+user.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -51,11 +74,11 @@
                   <h1>Modification Utilisateur</h1>
                   <div class="signup-row">
                     <i class="fa fa-user"></i>
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="user.lastname">
+                    <input type="text" name="" value="" placeholder="Nom" v-model="user.lastname">
                   </div>
                   <div class="signup-row">
                     <i class="fa fa-user"></i>
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Prénom" v-model="user.firstname">
+                    <input type="text" name="" value="" placeholder="Prénom" v-model="user.firstname">
                   </div>
                   <div class="signup-row">
                     <i class="fa fa-envelope"></i>
@@ -63,12 +86,12 @@
                   </div>
                   <div class="signup-row">
                     <i class="fa fa-user"></i>
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Nom pour le Challenge" v-model="user.challengename">
+                    <input type="text" name="" value="" placeholder="Nom pour le Challenge" v-model="user.challengename">
                   </div>
 
 
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                   </div>
                 </form>
@@ -90,11 +113,11 @@
                   <h1>Formulaire d'enregistrement</h1>
                   <div class="signup-row">
                     <i class="fa fa-user"></i>
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="lastname">
+                    <input type="text" name="" value=""  placeholder="Nom" v-model="lastname">
                   </div>
                   <div class="signup-row">
                     <i class="fa fa-user"></i>
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Prénom" v-model="firstname">
+                    <input type="text" name="" value=""  placeholder="Prénom" v-model="firstname">
                   </div>
                   <div class="signup-row">
                     <i class="fa fa-envelope"></i>
@@ -112,22 +135,13 @@
 
 
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                   </div>
                 </form>
               </div>
             </div>
           </div>
-
-
-
-        
-
-
-
-
-
 
       </div>
 
@@ -184,6 +198,7 @@
 
         }
         this.registerForm(obj);
+        this.fetchAllUsers();
 
       },
       onEdit(user) {
@@ -196,6 +211,7 @@
           'challengename': user.challengename
         }
         this.editForm(obj);
+        this.fetchAllUsers();
 
       },
       onDelete(id, index) {
@@ -209,7 +225,7 @@
 
       this.fetchAllUsers();
       this.fetchUser();
-      this.fetchUserById(this.$route.params.id);
+      //this.fetchUserById(this.$route.params.id);
     }
   }
 </script>

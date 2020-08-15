@@ -18,7 +18,7 @@ class CreateContentsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('name');
-            $table->string('function');
+            $table->string('fonction');
             $table->string('image');
             $table->timestamps();
         });

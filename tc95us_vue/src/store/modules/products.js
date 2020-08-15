@@ -1,9 +1,8 @@
 const token = window.localStorage.getItem('token') || "";
 
 const state = {
-    message:[],
-    createmessage:[],
-    updatemessage:[],
+    productmessage:[],
+    updateproductmessage:[],
     product:[],
     products:[],
     ProductById:[],
@@ -14,13 +13,11 @@ const state = {
 }
 
 const getters = {
-    getMessage:(state) =>(state.message),
-    getUpdateMessage:(state)=>(state.updatemessage),
-    getCreateMessage:(state)=>(state.createmessage),
+    getProductMessage:(state) =>(state.productmessage),
+    getUpdateProductMessage:(state)=>(state.updateproductmessage),
     getProduct:(state) =>(state.product),
     infoProductById:(state) =>(state.ProductById),
     getAllProducts:(state)=> (state.products),
-    deleteProductById:(state)=>(state.deleteProductById),
 }
 
 const actions = {
@@ -46,8 +43,8 @@ const actions = {
         fetch("http://localhost:8000/api/products", requestOptions)
           .then(response => response.json())
           .then(result =>  {
-              commit('createMessage',result);
-              location.reload();
+              commit('createProductMessage',result);
+              /* location.reload(); */
              
             })
           .catch(error => console.log('error', error));
@@ -75,7 +72,7 @@ const actions = {
       fetch(`http://localhost:8000/api/products/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
-            commit('updateMessage',result);
+            commit('updateProductMessage',result);
             location.reload();
            
           })
@@ -148,8 +145,8 @@ const actions = {
   
 
 const mutations = {
-createMessage:(state,message)=>(state.message = message),
-updateMessage:(state,updatemessage)=>(state.updatemessage = updatemessage),
+createProductMessage:(state,productmessage)=>(state.productmessage = productmessage),
+updateProductMessage:(state,updateproductmessage)=>(state.updateproductmessage = updateproductmessage),
 fetchProduct:(state,product) =>(state.product = product),
 fetchAllProducts:(state,products)=>(state.products = products),
 ProductById:(state,ProductById)=>(state.ProductById = ProductById),

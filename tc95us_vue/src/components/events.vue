@@ -1,147 +1,196 @@
 <template>
   <div class="events">
-    <h1>Gestion Evennements</h1>
+    <h1>Gestion évennements</h1>
+    
+                 
+        
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".eventaddmodal">+ Ajouter un
+      Evennement</button>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th>Titre</th>
+                <th>Détails</th>
+                <th>Lieu</th>
+                <th>Date</th>
+                <th>Horaires</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(event, index) in getAllEvents" :key="event.id">
+                <th>{{event.id}}</th>
+                <th>{{event.title}}</th>
+                <th>{{event.details}}</th>
+                <th>{{event.place}}</th>
+                <th>{{event.date}}</th>
+                <th>{{event.hour}}</th>
+                <th>{{event.price}}</th>
+                <th>{{event.image}}</th>
+                <th>
+                  <a href="#" class="icon">
+                    <i v-on:click="onDeleteEvent(event.id, index)" class="fa fa-trash"></i>
+                  </a> |
+                  <a href="#" class="icon">
+                    <i  @click="id=event.id" class="fas fa-edit" data-toggle="modal" :data-target="'#eventeditmodal'+event.id"></i>
+                  </a> |
+                  <a href="#" class="icon">
+                    <i  @click="id=event.id" class="fas fa-eye" data-toggle="modal" :data-target="'#eventshowmodal'+event.id"></i>
+                  </a>
+                </th>
+
+              <!-- Show Event modal -->
 
 
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".eventaddmodal">+ Ajouter un
-      Evènnement</button>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th>Nom</th>
-          <th>Détail</th>
-          <th>Lieu</th>
-          <th>Prix</th>
-          <th>Image</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(event, index) in getAllEvents" :key="event.id">
-          <th>{{event.id}}</th>
-          <th>{{event.title}}</th>
-          <th>{{event.details}}</th>
-          <th>{{event.place}}</th>
-          <th>{{event.price}}</th>
-          <th>{{event.image}}</th>
-          <th>
-            <a href="#" class="icon">
-              <i v-on:click="onDelete(event.id, index)" class="fa fa-trash"></i>
-            </a> |
-            <a href="#" class="icon">
-              <!-- <i v-on:click="onEdit(user.id, index)" class="fas fa-edit"></i> -->
-            </a>
-            <!-- <router-link 
-                    :to="{
-                      name:'Userinfo', 
-                      params:{id: event.id}
-                    }" 
-                    class="icon"
-                    >
-                      <i class="far fa-eye"></i>
-                    </router-link> -->
-          </th>
-
-          <!-- Edit Events modal -->
-
-
-          <div class="modal fade eventeditmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+          <div class="modal fade" :id="'eventshowmodal'+event.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit="onEdit" class="sign-back">
-                  <h1>Modification évènnement</h1>
+                <form class="sign-back">
+                  <h6>Détails évennement</h6><br><br>
                   <div class="signup-row">
-
-                    <input type="text" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="event.name">
+                    <h3>{{event.title}}</h3>
                   </div>
                   <div class="signup-row">
-
-                    <input type="textarea" name="" value="" id="exampleInputName1" placeholder="Détails"
-                      v-model="event.details">
+                   <h6>{{event.details}}</h6>
                   </div>
                   <div class="signup-row">
-
-                    <input type="text" v-model="event.place" name="" value="" placeholder="Lieu">
+                   <h6>{{event.place}}</h6>
                   </div>
                   <div class="signup-row">
-
-                    <input type="text" v-model="event.price" name="" value="" placeholder="Prix">
+                   <h6>{{event.date}}</h6>
                   </div>
                   <div class="signup-row">
+                   <h6>{{event.hour}}</h6>
+                  </div>
+                   <div class="signup-row">
+                   <h6>{{event.price}}</h6>
+                  </div>
+                  <div class="signup-row">
+                   <h6>{{event.image}}</h6>
+                  </div>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button @click="id=event.id" data-toggle="modal" :data-target="'#eventeditmodal'+event.id" class="btn btn-primary">Modifier</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
+           <!-- Edit Event modal -->
+
+
+          <div class="modal fade" :id="'eventeditmodal'+event.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <form @submit.prevent="onEventEdit(event)" class="sign-back">
+                  <h1>Modification évennement</h1>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" name="" value=""  placeholder="Titre" v-model="event.title"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" name="" value=""  placeholder="Détails" v-model="event.details"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" v-model="event.place" name="" value="" placeholder="Lieu"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" v-model="event.date" name="" value="" placeholder="Date"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" v-model="event.hour" name="" value="" placeholder="Horaires"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" v-model="event.price" name="" value="" placeholder="Prix"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
                     <input type="text" v-model="event.image" name="" value="" placeholder="Image">
                   </div>
 
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                   </div>
                 </form>
               </div>
             </div>
           </div>
-        </tr>
-      </tbody>
-    </table>
+              </tr>
+            </tbody>
+          </table>
 
-    <!-- Add Events modal -->
+          <!-- Add Events modal -->
 
 
-    <div class="modal fade eventaddmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <form @submit="onsubmit" class="sign-back">
-            <h1>Ajout Evennement</h1>
-            <div class="signup-row">
+          <div class="modal fade eventaddmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <form @submit="onEventsubmit" class="sign-back">
+                  <h1>Ajout évennement</h1>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" name="" value="" placeholder="Titre" v-model="title"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" name="" value=""  placeholder="Détails" v-model="details"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    <textarea class="form-control" name="" value=""  placeholder="Lieu" v-model="place"></textarea>
+                  </div>
+                  <div class="signup-row">
+                  <textarea class="form-control" name="" value=""  placeholder="Date" v-model="date"></textarea>
+                  </div>
+                  <div class="signup-row">
+                  <textarea class="form-control" name="" value=""  placeholder="Horaires" v-model="hour"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <textarea class="form-control" v-model="price" name="" value="" placeholder="Prix"></textarea>
+                  </div>
+                  <div class="signup-row">
+                    
+                    <input type="text" class="form-control" v-model="image" name="" value="" placeholder="Image">
+                  </div>
 
-              <textarea class="form-control" name="" value="" id="eventtitle" placeholder="Nom" v-model="title"></textarea>
+
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary" >Enregistrer</button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div class="signup-row">
-              <!-- <label for="details" class="control-label">Details</label> -->
-              <textarea class="form-control" name="" value="" id="details" placeholder="Détails" v-model="details"></textarea>
-              <!-- <input type="message-text" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="details"> -->
-            </div>
-            <div class="signup-row">
-
-              <textarea class="form-control" name="" value="" v-model="place" placeholder="Lieu"></textarea>
-            </div>
-            <div class="signup-row">
-
-              <textarea class="form-control" v-model="price" name="" value="" placeholder="Prix"></textarea>
-            </div>
-            <div class="signup-row">
-
-              <input type="image" v-model="image" name="" value="" placeholder="Image">
-            </div>
+          </div>
 
 
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              <button type="submit" class="btn btn-primary">Enregistrer</button>
-            </div>
-          </form>
-        </div>
+        
+
+
+
+
+
+
       </div>
-    </div>
 
 
-
-
-
-
-
-
-
-
-  </div>
-
-
-
+  
 </template>
 
 <script>
@@ -163,9 +212,12 @@
     },
     data() {
       return {
+        id: '',
         title: '',
         details: '',
-        place:'',
+        place: '',
+        date: '',
+        hour: '',
         price: '',
         image: '',
         
@@ -173,44 +225,51 @@
     },
     methods: {
 
-      ...mapActions(['createForm', 'fetchEvent', 'fetchAllEvents', 'fetchEventById', 'deleteEvent', 'editEvent']),
-      onsubmit(e) {
+      ...mapActions(['createEvent', 'editEvent', 'fetchAllEvents', 'fetchEventById', 'deleteEvent']),
+      onEventsubmit(e) {
         e.preventDefault();
         var obj = {
           'title': this.title,
           'details': this.details,
           'place': this.place,
+          'date': this.date,
+          'hour': this.hour,
           'price': this.price,
           'image': this.image,
 
         }
-        this.createForm(obj);
+        this.createEvent(obj);
+        this.fetchAllEvents();
 
       },
-      onEdit(e) {
-        e.preventDefault();
+      onEventEdit(event) {
+        //e.preventDefault();
         var obj = {
-          'title': this.title,
-          'details': this.details,
-          'place': this.place,
-          'price': this.price,
-          'image': this.image,
+          'id':event.id,
+          'title': event.title,
+          'details': event.details,
+          'place': event.place,
+          'date': event.date,
+          'hour': event.hour,
+          'price': event.price,
+          'image': event.image,
         }
         this.editEvent(obj);
+        this.fetchAllEvents();
 
       },
-      onDelete(id, index) {
+      onDeleteEvent(id, index) {
         this.deleteEvent(id)
         this.getAllEvents.splice(index, 1)
       },
 
     },
-    computed: mapGetters(['getMessage', 'getAllEvents', 'getEvents', 'infoEventsById', ]),
+    computed: mapGetters(['getEventMessage', 'getAllEvents', 'getEvent', 'infoEventById', 'getUpdateEventMessage' ]),
     created() {
 
       this.fetchAllEvents();
-      this.fetchEvent();
-      this.fetchEventById(this.$route.params.id);
+      
+      //this.fetchEventById(this.$route.params.id);
     }
   }
 </script>

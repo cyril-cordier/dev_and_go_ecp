@@ -17,10 +17,11 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('details');
-            $table->text('place');
-            $table->text('price');
+            $table->string('place');
+            $table->string('date');
+            $table->string('hour');
+            $table->string('price');
             $table->string('image');
-            $table->string('file');
             $table->timestamps();
         });
     }

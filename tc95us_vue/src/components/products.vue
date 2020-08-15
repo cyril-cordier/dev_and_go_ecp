@@ -26,23 +26,45 @@
                 <th>{{product.image}}</th>
                 <th>
                   <a href="#" class="icon">
-                    <i v-on:click="onDelete(product.id, index)" class="fa fa-trash"></i>
+                    <i v-on:click="onDeleteProduct(product.id, index)" class="fa fa-trash"></i>
                   </a> |
                   <a href="#" class="icon">
                     <i  @click="id=product.id" class="fas fa-edit" data-toggle="modal" :data-target="'#producteditmodal'+product.id"></i>
+                  </a> |
+                  <a href="#" class="icon">
+                    <i  @click="id=product.id" class="fas fa-eye" data-toggle="modal" :data-target="'#productshowmodal'+product.id"></i>
                   </a>
-                  <!-- <router-link 
-                    :to="{
-                      name:'Userinfo', 
-                      params:{id: product.id}
-                    }" 
-                    class="icon"
-                    >
-                      <i class="far fa-eye"></i>
-                    </router-link> -->
                 </th>
 
-              <!-- Edit Products modal -->
+              <!-- Show Product modal -->
+
+
+          <div class="modal fade" :id="'productshowmodal'+product.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <form class="sign-back">
+                  <h6>Détails produit</h6><br><br>
+                  <div class="signup-row">
+                    <h3>{{product.name}}</h3>
+                  </div>
+                  <div class="signup-row">
+                   <h6>{{product.details}}</h6>
+                  </div>
+                   <div class="signup-row">
+                   <h6>{{product.price}}</h6>
+                  </div>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button @click="id=product.id" data-toggle="modal" :data-target="'#producteditmodal'+product.id" class="btn btn-primary">Modifier</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+           <!-- Edit Product modal -->
 
 
           <div class="modal fade" :id="'producteditmodal'+product.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -53,11 +75,11 @@
                   <h1>Modification produit</h1>
                   <div class="signup-row">
                     
-                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="product.name"></textarea>
+                    <textarea class="form-control" name="" value=""  placeholder="Nom" v-model="product.name"></textarea>
                   </div>
                   <div class="signup-row">
                     
-                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="product.details"></textarea>
+                    <textarea class="form-control" name="" value=""  placeholder="Détails" v-model="product.details"></textarea>
                   </div>
                   <div class="signup-row">
                     
@@ -69,7 +91,7 @@
                   </div>
 
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                   </div>
                 </form>
@@ -91,11 +113,11 @@
                   <h1>Ajout produit</h1>
                   <div class="signup-row">
                     
-                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Nom" v-model="name"></textarea>
+                    <textarea class="form-control" name="" value="" placeholder="Nom" v-model="name"></textarea>
                   </div>
                   <div class="signup-row">
                     
-                    <textarea class="form-control" name="" value="" id="exampleInputName1" placeholder="Détails" v-model="details"></textarea>
+                    <textarea class="form-control" name="" value=""  placeholder="Détails" v-model="details"></textarea>
                   </div>
                   <div class="signup-row">
                     
@@ -109,8 +131,8 @@
 
 
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary" >Enregistrer</button>
                   </div>
                 </form>
               </div>
@@ -161,7 +183,7 @@
     },
     methods: {
 
-      ...mapActions(['registerProduct', 'fetchProduct', 'fetchAllProducts', 'fetchProductById', 'deleteProduct', 'createProduct', 'editProduct']),
+      ...mapActions(['createProduct', 'editProduct', 'fetchAllProducts', 'fetchProductById', 'deleteProduct']),
       onProductsubmit(e) {
         e.preventDefault();
         var obj = {
@@ -172,6 +194,7 @@
 
         }
         this.createProduct(obj);
+        this.fetchAllProducts();
 
       },
       onProductEdit(product) {
@@ -184,20 +207,21 @@
           'image': product.image,
         }
         this.editProduct(obj);
+        this.fetchAllProducts();
 
       },
-      onDelete(id, index) {
+      onDeleteProduct(id, index) {
         this.deleteProduct(id)
         this.getAllProducts.splice(index, 1)
       },
 
     },
-    computed: mapGetters(['getMessage', 'getAllProducts', 'getProducts', 'infoProductsById', ]),
+    computed: mapGetters(['getProductMessage', 'getAllProducts', 'getProduct', 'infoProductById', 'getUpdateProductMessage' ]),
     created() {
 
       this.fetchAllProducts();
-      this.fetchProduct();
-      this.fetchProductById(this.$route.params.id);
+      
+      //this.fetchProductById(this.$route.params.id);
     }
   }
 </script>

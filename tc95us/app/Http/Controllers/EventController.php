@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Events;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller; 
 use Validator;
 
 class EventController extends Controller
@@ -23,8 +24,10 @@ class EventController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [ 
             'title' => 'required',
-            'detail' => 'required', 
+            'details' => 'required', 
             'place' => 'required', 
+            'date' => 'required', 
+            'hour' => 'required', 
             'price' => 'required',
             'image' => 'required', 
         ]);
@@ -40,25 +43,18 @@ class EventController extends Controller
         return response()->json(['success'=>'event successfully added'], $this-> successStatus); 
     }
 
-    public function update(Request $request, $id){
-        $event = Events::find($id);
+    public function update(Request $request, Events $event){
 
-        $event->title = $request->input('title');
-        $event->detail = $request->input('detail');
-        $event->place = $request->input('place');
-        $event->price = $request->input('price');
-        $event->image = $request->input('image');
-        
-       
-        $event->save();
-        
-        
+        $event->update($request->all());
+            
 
         return response()->json([
             'id' => $event->id,
             'title' => $event->title,
-            'detail' => $event->detail,
+            'details' => $event->details,
             'place' => $event->place,
+            'date' => $event->date,
+            'hour' => $event->hour,
             'price' => $event->price,
             'image' => $event->image,
             'success' => 'event updated with success !'
@@ -74,8 +70,10 @@ class EventController extends Controller
         return response()->json([
             'id' => $event->id,
             'title' => $event->title,
-            'detail' => $event->detail,
+            'details' => $event->details,
             'place' => $event->place,
+            'date' => $event->date,
+            'hour' => $event->hour,
             'price' => $event->price,
             'image' => $event->image,
         ]);

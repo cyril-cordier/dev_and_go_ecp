@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Contents;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Validator;
 
 class ContentController extends Controller
@@ -25,8 +26,6 @@ class ContentController extends Controller
             'title' => 'required',
             'content' => 'required', 
             'name' => 'required', 
-            'function' => 'required',
-            'image' => 'required', 
         ]);
 
 
@@ -40,17 +39,9 @@ class ContentController extends Controller
         return response()->json(['success'=>'content successfully added'], $this-> successStatus); 
     }
 
-    public function update(Request $request, $id){
-        $content = Contents::find($id);
+    public function update(Request $request, Contents $content){
 
-        $content->title = $request->input('title');
-        $content->content = $request->input('content');
-        $content->name = $request->input('name');
-        $content->function = $request->input('function');
-        $content->image = $request->input('image');
-        
-       
-        $content->save();
+        $content->update($request->all());
         
         
 
@@ -59,9 +50,9 @@ class ContentController extends Controller
             'title' => $content->title,
             'content' => $content->content,
             'name' => $content->name,
-            'function' => $content->function,
+            'fonction' => $content->fonction,
             'image' => $content->image,
-            'success' => 'content updated with success !'
+            'success' => 'Content updated with success !'
         
         ], $this-> successStatus); 
 
@@ -76,7 +67,7 @@ class ContentController extends Controller
             'title' => $content->title,
             'content' => $content->content,
             'name' => $content->name,
-            'function' => $content->function,
+            'fonction' => $content->fonction,
             'image' => $content->image,
         ]);
     }

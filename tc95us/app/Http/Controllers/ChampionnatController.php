@@ -3,6 +3,7 @@
 Namespace App\Http\Controllers;
 use App\Championnats;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller; 
 use Validator;
 
 class ChampionnatController extends Controller
@@ -39,25 +40,18 @@ class ChampionnatController extends Controller
         return response()->json(['success'=>'match successfully added'], $this-> successStatus); 
     }
 
-    public function update(Request $request, $id){
-        $match = Championnats::find($id);
+    public function update(Request $request, Championnats $championnat){
 
-        $match->date = $request->input('date');
-        $match->competition = $request->input('competition');
-        $match->match = $request->input('match');
-        $match->score = $request->input('score');
-        
-       
-        $match->save();
+        $championnat->update($request->all());
         
         
 
         return response()->json([
-            'id' => $match->id,
-            'date' => $match->date,
-            'competition' => $match->competition,
-            'match' => $match->match,
-            'score' => $match->score,
+            'id' => $championnat->id,
+            'date' => $championnat->date,
+            'competition' => $championnat->competition,
+            'match' => $championnat->match,
+            'score' => $championnat->score,
             'success' => 'match updated with success !'
         
         ], $this-> successStatus); 

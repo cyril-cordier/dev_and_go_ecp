@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\ChallengeUsers;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller; 
 use Validator;
 
 class ChallengeUserController extends Controller
@@ -39,21 +40,9 @@ class ChallengeUserController extends Controller
         return response()->json(['success'=>'challenge user successfully added'], $this-> successStatus); 
     }
 
-    public function update(Request $request, $id){
-        $challengeuser = ChallengeUsers::find($id);
+    public function update(Request $request, ChallengeUsers $challengeuser){
 
-        $challengeuser->challengename = $request->input('challengename');
-        $challengeuser->ranking = $request->input('ranking');
-        $challengeuser->contact = $request->input('contact');
-        $challengeuser->points = $request->input('points');
-        $challengeuser->nbmatchs = $request->input('nbmatchs');
-        $challengeuser->matchaverage = $request->input('matchaverage');
-        $challengeuser->setaverage = $request->input('setaverage');
-        $challengeuser->gameaverage = $request->input('gameaverage');
-        $challengeuser->gameaverage = $request->input('visible');
-        
-       
-        $challengeuser->save();
+        $challengeuser->update($request->all());
         
         
 

@@ -15,8 +15,7 @@ class CreateOfficeTable extends Migration
     {
         Schema::create('office', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('lastname');
+            $table->string('name');
             $table->string('function');
             $table->string('image');
             $table->timestamps();

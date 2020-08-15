@@ -1,40 +1,37 @@
 const token = window.localStorage.getItem('token') || "";
 
 const state = {
-    eventmessage:[],
-    updateeventmessage:[],
-    event:[],
-    events:[],
-    eventById:[],
-    deleteEventById:[],
+    contentmessage:[],
+    updatecontentmessage:[],
+    content:[],
+    contents:[],
+    ContentById:[],
+    deleteContentById:[],
 
    
 
 }
 
 const getters = {
-  getEventMessage:(state) =>(state.eventmessage),
-  getUpdateEventMessage:(state)=>(state.updateeventmessage), 
-  getEvent:(state) =>(state.event),
-  infoEventById:(state) =>(state.EventById),
-  getAllEvents:(state)=> (state.events),
+    getContentMessage:(state) =>(state.contentmessage),
+    getUpdateContentMessage:(state)=>(state.updatecontentmessage),
+    getContent:(state) =>(state.content),
+    infoContentById:(state) =>(state.ContentById),
+    getAllContents:(state)=> (state.contents),
 }
 
 const actions = {
    
     // CREATE
-    async createEvent({commit},form){
+    async createContent({commit},form){
       var myHeaders = new Headers();
-            myHeaders.append("Authorization", `Bearer ${token}`);  
-      var formdata = new FormData();
+            myHeaders.append("Authorization", `Bearer ${token}`);
+        var formdata = new FormData();
         formdata.append("title", form.title);
-        formdata.append("details", form.details);
-        formdata.append("place", form.place);
-        formdata.append("date", form.date);
-        formdata.append("hour", form.hour);
-        formdata.append("price", form.price);
+        formdata.append("content", form.content);
+        formdata.append("name", form.name);
+        formdata.append("fonction", form.fonction);
         formdata.append("image", form.image);
-       
         
      
         var requestOptions = {
@@ -44,29 +41,26 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/events", requestOptions)
+        fetch("http://localhost:8000/api/contents", requestOptions)
           .then(response => response.json())
           .then(result =>  {
-              commit('createEventMessage',result);
+              commit('createContentMessage',result);
               /* location.reload(); */
-
              
             })
           .catch(error => console.log('error', error));
     },
     
     // EDIT
-    async editEvent({commit},form){
+    async editContent({commit},form){
       var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
             myHeaders.append('Content-Type','application/json');
             var raw=JSON.stringify({
               "title": form.title,
-              "details": form.details,
-              "place": form.place,
-              "date": form.date,
-              "hour": form.hour,
-              "price": form.price,
+              "content": form.content,
+              "name": form.name,
+              "fonction": form.fonction,
               "image": form.image,
             });
    
@@ -77,11 +71,11 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/events/${form.id}`, requestOptions)
+      fetch(`http://localhost:8000/api/contents/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
-            commit('updateEventMessage',result);
-            //location.reload();
+            commit('updateContentMessage',result);
+            location.reload();
            
           })
         .catch(error => console.log('error', error));
@@ -90,7 +84,7 @@ const actions = {
    
       
 // FETCH BY ID
-    async fetchEventById({commit},id){
+    async fetchContentById({commit},id){
                   var myHeaders = new Headers();
                   myHeaders.append("Authorization", `Bearer ${token}`);
       
@@ -101,17 +95,17 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/events/${id}`, requestOptions)
+                  fetch(`http://localhost:8000/api/contents/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
-                    commit('EventById',result);
+                    commit('ContentById',result);
     
                   })
                   .catch(error => console.log('error', error));
                       },
 
     // DELETE BY ID
-    async deleteEvent({commit},id){
+    async deleteContent({commit},id){
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -122,17 +116,17 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/events/${id}`, requestOptions)
+      fetch(`http://localhost:8000/api/contents/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        commit('deleteEventById',result);
+        commit('deleteContentById',result);
 
       })
       .catch(error => console.log('error', error));
           },
 
         //FETCH ALL
-     async fetchAllEvents({commit}){
+     async fetchAllContents({commit}){
             var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -143,9 +137,9 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/events/", requestOptions)
+            fetch("http://localhost:8000/api/contents/", requestOptions)
             .then(response => response.json())
-            .then(result => commit('fetchAllEvents',result))
+            .then(result => commit('fetchAllContents',result))
             .catch(error => console.log('error', error));
                 },
 
@@ -153,12 +147,12 @@ const actions = {
   
 
 const mutations = {
-createEventMessage:(state,eventmessage)=>(state.eventmessage = eventmessage),
-updateEventMessage:(state,updateeventmessage)=>(state.updateeventmessage = updateeventmessage),
-fetchEvent:(state,event) =>(state.event = event),
-fetchAllEvents:(state,events)=>(state.events = events),
-EventById:(state,EventById)=>(state.EventById = EventById),
-deleteEventById:(state,deleteeventById)=>(state.deleteEventById = deleteeventById),
+createContentMessage:(state,contentmessage)=>(state.contentmessage = contentmessage),
+updateContentMessage:(state,updatecontentmessage)=>(state.updatecontentmessage = updatecontentmessage),
+fetchContent:(state,content) =>(state.content = content),
+fetchAllContents:(state,contents)=>(state.contents = contents),
+ContentById:(state,ContentById)=>(state.ContentById = ContentById),
+deleteContentById:(state,deleteContentById)=>(state.deleteContentById = deleteContentById),
 
 }
 
