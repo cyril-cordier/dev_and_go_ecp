@@ -13,6 +13,6 @@ class Office extends Model
 
     protected $table = 'office';
     protected $fillable = [
-    'name', 'fonction','image'
+    'name', 'fonction','image', 'image_name'
 ];
 }

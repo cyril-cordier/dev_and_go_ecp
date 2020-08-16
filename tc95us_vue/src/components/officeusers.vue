@@ -21,7 +21,7 @@
                 <th>{{officeuser.id}}</th>
                 <th>{{officeuser.name}}</th>
                 <th>{{officeuser.fonction}}</th>
-                <th>{{officeuser.image}}</th>
+                <th><img src="http://127.0.0.1:8000/storage/app/public/images/1597579673551.jpg"></th>
                 <th>
                   <a href="#" class="icon">
                     <i v-on:click="onDeleteOfficeuser(officeuser.id, index)" class="fa fa-trash"></i>
@@ -103,7 +103,7 @@
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit="onOfficeusersubmit" class="sign-back">
+                <form @submit="onOfficeusersubmit" class="sign-back" enctype="multipart/form-data">
                   <h1>Ajout Membre du bureau</h1>
                   <div class="signup-row">
                     
@@ -114,8 +114,10 @@
                     <textarea class="form-control" name="" value=""  placeholder="Fonction" v-model="fonction"></textarea>
                   </div>
                   <div class="signup-row">
-                    
-                    <input type="text" class="form-control" v-model="image" name="" value="" placeholder="Image">
+                    <strong>Image:</strong>
+
+                        <input type="file" name="image" class="form-control" @change="onImageChange">
+                    <!-- <input type="text" class="form-control" v-model="image" name="" value="" placeholder="Image"> @change="onImageChange"-->
                   </div>
 
 
@@ -167,20 +169,33 @@
         name: '',
         fonction: '',
         image: '',
+        image_name:'',
+        extension:''
+        //message ?
         
       }
     },
     methods: {
 
       ...mapActions(['createOfficeuser', 'editOfficeuser', 'fetchAllOfficeusers', 'fetchOfficeuserById', 'deleteOfficeuser']),
+      
+            onImageChange(e){
+        //console.log(e.target.files[0]);
+        this.image = e.target.files[0];
+      },
       onOfficeusersubmit(e) {
+        var a = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         e.preventDefault();
         var obj = {
           'name': this.name,
           'fonction': this.fonction,
           'image': this.image,
+          'image_name':Date.now(),
+          'extension': a
+          
 
         }
+        console.log(obj.extension);
         this.createOfficeuser(obj);
         this.fetchAllOfficeusers();
 
@@ -201,6 +216,7 @@
         this.deleteOfficeuser(id)
         this.getAllOfficeusers.splice(index, 1)
       },
+
 
     },
     computed: mapGetters(['getOfficeuserMessage', 'getAllOfficeusers', 'getOfficeuser', 'infoOfficeuserById', 'getUpdateOfficeuserMessage' ]),

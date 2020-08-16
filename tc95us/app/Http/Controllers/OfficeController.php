@@ -25,12 +25,35 @@ class OfficeController extends Controller
         $validator = Validator::make($request->all(), [ 
             'name' => 'required',
             'fonction' => 'required',
+            //'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
 
         if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
+        /* import image */
+
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $fonction=$request->fonction;
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = $imagename;
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+    
+            /* }else{
+                $fileNameToStore = 'noimage.png'; */
+            }
+
+       /*  $image = time().'.'.$request->image->getClientOriginalExtension();
+
+        $request->image->move(public_path('images'), $image); */
+        /* import image */
+        $request->image_name = $fileNameToStore;
+        
+
         $input = $request->all(); 
        
         Office::create($input);

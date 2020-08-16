@@ -27,9 +27,11 @@ const actions = {
       var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
         var formdata = new FormData();
+        //var image_name =  form.id;
         formdata.append("name", form.name);
         formdata.append("fonction", form.fonction);
         formdata.append("image", form.image);
+        formdata.append("image_name", form.image_name+'.'+form.extension);
         
      
         var requestOptions = {

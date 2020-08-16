@@ -18,6 +18,7 @@ class CreateOfficeTable extends Migration
             $table->string('name');
             $table->string('function');
             $table->string('image');
+            $table->string('image_name');
             $table->timestamps();
         });
     }
