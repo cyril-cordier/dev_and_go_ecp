@@ -32,7 +32,7 @@ public $successStatus = 200;
     public function register(Request $request) 
     { 
         $validator = Validator::make($request->all(), [ 
-            'challengename' => ['unique'],
+            'challengename' => ['unique:users'],
             'firstname' => 'required', 
             'lastname' => 'required',
             'email' => ['unique:users','required','email'], 
