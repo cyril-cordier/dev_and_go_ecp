@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     championnatmessage:[],
@@ -40,7 +41,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/championnats", requestOptions)
+        fetch(`http://${url}/api/championnats`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('createChampionnatMessage',result);
@@ -69,7 +70,7 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/championnats/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/championnats/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateChampionnatMessage',result);
@@ -93,7 +94,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/championnats/${id}`, requestOptions)
+                  fetch(`http://${url}/api/championnats/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('ChampionnatById',result);
@@ -114,7 +115,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/championnats/${id}`, requestOptions)
+      fetch(`http://${url}/api/championnats/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteChampionnatById',result);
@@ -135,7 +136,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/championnats/", requestOptions)
+            fetch(`http://${url}/api/championnats/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllChampionnats',result))
             .catch(error => console.log('error', error));

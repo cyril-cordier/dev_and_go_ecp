@@ -21,7 +21,7 @@
                 <th>{{officeuser.id}}</th>
                 <th>{{officeuser.name}}</th>
                 <th>{{officeuser.fonction}}</th>
-                <th><img src="http://127.0.0.1:8000/storage/app/public/images/1597579673551.jpg"></th>
+                <th><img :src="`http://localhost:8000/storage/images/office/${officeuser.image_name}`"/></th>
                 <th>
                   <a href="#" class="icon">
                     <i v-on:click="onDeleteOfficeuser(officeuser.id, index)" class="fa fa-trash"></i>
@@ -50,7 +50,7 @@
                    <h6>{{officeuser.fonction}}</h6>
                   </div>
                    <div class="signup-row">
-                   <h6>{{officeuser.image}}</h6>
+                   <img :src="`http://localhost:8000/storage/images/office/${officeuser.image_name}`"/>
                   </div>
                   
                   <div class="modal-footer">
@@ -69,7 +69,7 @@
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit.prevent="onOfficeuserEdit(officeuser)" class="sign-back">
+                <form @submit.prevent="onOfficeuserEdit(officeuser)" class="sign-back"  enctype="multipart/form-data">
                   <h1>Modification Membre du bureau</h1>
                   <div class="signup-row">
                     
@@ -81,7 +81,7 @@
                   </div>
                   <div class="signup-row">
                     
-                    <input type="text" v-model="officeuser.image" name="" value="" placeholder="Image">
+                    <input type="file" name="image" class="form-control" @change="onImageChange">
                   </div>
 
                   <div class="modal-footer">
@@ -184,30 +184,33 @@
         this.image = e.target.files[0];
       },
       onOfficeusersubmit(e) {
-        var a = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         e.preventDefault();
         var obj = {
           'name': this.name,
           'fonction': this.fonction,
           'image': this.image,
           'image_name':Date.now(),
-          'extension': a
+          'extension': ext
           
 
         }
-        console.log(obj.extension);
         this.createOfficeuser(obj);
         this.fetchAllOfficeusers();
 
       },
       onOfficeuserEdit(officeuser) {
         //e.preventDefault();
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         var obj = {
           'id':officeuser.id,
           'name': officeuser.name,
           'fonction': officeuser.fonction,
-          'image': officeuser.image,
+          'image': this.image,
+          'image_name':Date.now(),
+          'extension': ext
         }
+        console.log(obj);
         this.editOfficeuser(obj);
         this.fetchAllOfficeusers();
 

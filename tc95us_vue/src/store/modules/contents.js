@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     contentmessage:[],
@@ -32,6 +33,7 @@ const actions = {
         formdata.append("name", form.name);
         formdata.append("fonction", form.fonction);
         formdata.append("image", form.image);
+        formdata.append("image_name", form.image_name+'.'+form.extension);
         
      
         var requestOptions = {
@@ -41,7 +43,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/contents", requestOptions)
+        fetch(`http://${url}/api/contents`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('createContentMessage',result);
@@ -62,6 +64,7 @@ const actions = {
               "name": form.name,
               "fonction": form.fonction,
               "image": form.image,
+              "image_name": form.image_name+'.'+form.extension
             });
    
       var requestOptions = {
@@ -71,11 +74,11 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/contents/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/contents/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateContentMessage',result);
-            location.reload();
+            //location.reload();
            
           })
         .catch(error => console.log('error', error));
@@ -95,7 +98,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/contents/${id}`, requestOptions)
+                  fetch(`http://${url}/api/contents/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('ContentById',result);
@@ -116,7 +119,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/contents/${id}`, requestOptions)
+      fetch(`http://${url}/api/contents/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteContentById',result);
@@ -137,7 +140,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/contents/", requestOptions)
+            fetch(`http://${url}/api/contents/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllContents',result))
             .catch(error => console.log('error', error));

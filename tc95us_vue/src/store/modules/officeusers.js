@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     officeusermessage:[],
@@ -32,7 +33,6 @@ const actions = {
         formdata.append("fonction", form.fonction);
         formdata.append("image", form.image);
         formdata.append("image_name", form.image_name+'.'+form.extension);
-        
      
         var requestOptions = {
           method: 'POST',
@@ -41,7 +41,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/office", requestOptions)
+        fetch(`http://${url}/api/office`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('createOfficeuserMessage',result);
@@ -60,8 +60,10 @@ const actions = {
               "name": form.name,
               "fonction": form.fonction,
               "image": form.image,
+              "image_name": form.image_name+'.'+form.extension
             });
-   
+            console.log(form.image);
+            
       var requestOptions = {
         method: 'PUT',
         headers: myHeaders,
@@ -69,11 +71,11 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/office/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/office/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateOfficeuserMessage',result);
-            location.reload();
+            //location.reload();
            
           })
         .catch(error => console.log('error', error));
@@ -93,7 +95,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/office/${id}`, requestOptions)
+                  fetch(`http://${url}/api/office/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('OfficeuserById',result);
@@ -114,7 +116,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/office/${id}`, requestOptions)
+      fetch(`http://${url}/api/office/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteOfficeuserById',result);
@@ -135,7 +137,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/office/", requestOptions)
+            fetch(`http://${url}/api/office/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllOfficeusers',result))
             .catch(error => console.log('error', error));

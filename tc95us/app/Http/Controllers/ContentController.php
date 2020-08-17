@@ -26,12 +26,19 @@ class ContentController extends Controller
             'title' => 'required',
             'content' => 'required', 
             'name' => 'required', 
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
 
         if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
+        /* import image */
+
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $path = $request->file('image')->storeAs('public/images/content', $imagename);
+            }
         $input = $request->all(); 
        
         Contents::create($input);
@@ -41,6 +48,10 @@ class ContentController extends Controller
 
     public function update(Request $request, Contents $content){
 
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $path = $request->file('image')->storeAs('public/images/content', $imagename);
+            }
         $content->update($request->all());
         
         
@@ -52,6 +63,7 @@ class ContentController extends Controller
             'name' => $content->name,
             'fonction' => $content->fonction,
             'image' => $content->image,
+            'image_name' => $office->image_name,
             'success' => 'Content updated with success !'
         
         ], $this-> successStatus); 
@@ -69,6 +81,7 @@ class ContentController extends Controller
             'name' => $content->name,
             'fonction' => $content->fonction,
             'image' => $content->image,
+            'image_name' => $content->image_name,
         ]);
     }
 

@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->string('hour');
             $table->string('price');
             $table->string('image');
+            $table->string('image_name');
             $table->timestamps();
         });
     }

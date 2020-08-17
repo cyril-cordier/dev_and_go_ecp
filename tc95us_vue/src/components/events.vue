@@ -29,7 +29,7 @@
                 <th>{{event.date}}</th>
                 <th>{{event.hour}}</th>
                 <th>{{event.price}}</th>
-                <th>{{event.image}}</th>
+                <th><img :src="`http://localhost:8000/storage/images/event/${event.image_name}`"/></th>
                 <th>
                   <a href="#" class="icon">
                     <i v-on:click="onDeleteEvent(event.id, index)" class="fa fa-trash"></i>
@@ -139,7 +139,7 @@
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit="onEventsubmit" class="sign-back">
+                <form @submit="onEventsubmit" class="sign-back" enctype="multipart/form-data">
                   <h1>Ajout évennement</h1>
                   <div class="signup-row">
                     
@@ -164,7 +164,9 @@
                   </div>
                   <div class="signup-row">
                     
-                    <input type="text" class="form-control" v-model="image" name="" value="" placeholder="Image">
+                    <strong>Image:</strong>
+
+                        <input type="file" name="image" class="form-control" @change="onImageChange">
                   </div>
 
 
@@ -220,13 +222,20 @@
         hour: '',
         price: '',
         image: '',
+        image_name:'',
+        extension:''
         
       }
     },
     methods: {
 
       ...mapActions(['createEvent', 'editEvent', 'fetchAllEvents', 'fetchEventById', 'deleteEvent']),
+      onImageChange(e){
+        //console.log(e.target.files[0]);
+        this.image = e.target.files[0];
+      },
       onEventsubmit(e) {
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         e.preventDefault();
         var obj = {
           'title': this.title,
@@ -236,6 +245,8 @@
           'hour': this.hour,
           'price': this.price,
           'image': this.image,
+          'image_name':Date.now(),
+          'extension': ext
 
         }
         this.createEvent(obj);
@@ -243,6 +254,7 @@
 
       },
       onEventEdit(event) {
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         //e.preventDefault();
         var obj = {
           'id':event.id,
@@ -253,6 +265,8 @@
           'hour': event.hour,
           'price': event.price,
           'image': event.image,
+          'image_name':Date.now(),
+          'extension': ext
         }
         this.editEvent(obj);
         this.fetchAllEvents();

@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     challengeresultmessage:[],
@@ -46,7 +47,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/challengeresults", requestOptions)
+        fetch(`http://${url}/api/challengeresults`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('createChallengeresultMessage',result);
@@ -82,7 +83,7 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/challengeresults/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/challengeresults/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateChallengeresultMessage',result);
@@ -106,7 +107,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/challengeresults/${id}`, requestOptions)
+                  fetch(`http://${url}/api/challengeresults/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('ChallengeresultById',result);
@@ -127,7 +128,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/challengeresults/${id}`, requestOptions)
+      fetch(`http://${url}/api/challengeresults/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteChallengeresultById',result);
@@ -148,7 +149,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/challengeresults/", requestOptions)
+            fetch(`http://${url}/api/challengeresults/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllChallengeresults',result))
             .catch(error => console.log('error', error));

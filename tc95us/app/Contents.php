@@ -13,6 +13,6 @@ class Contents extends Model
 
     protected $table = 'contents';
     protected $fillable = [
-    'title', 'content', 'name', 'fonction', 'image'
+    'title', 'content', 'name', 'fonction', 'image', 'image_name'
 ];
 }

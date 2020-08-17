@@ -27,13 +27,19 @@ class ProductController extends Controller
             'name' => 'required', 
             'details' => 'required', 
             'price' => 'required',
-            //'image' => 'required', 
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
 
         if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
+        /* import image */
+
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $path = $request->file('image')->storeAs('public/images/product', $imagename);
+            }
         $input = $request->all(); 
        
         Products::create($input);
@@ -42,6 +48,11 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, Products $product){
+
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $path = $request->file('image')->storeAs('public/images/product', $imagename);
+            }
 
         $product->update($request->all());
         
@@ -53,6 +64,7 @@ class ProductController extends Controller
             'details' => $product->details,
             'price' => $product->price,
             'image' => $product->image,
+            'image_name' => $product->image_name,
             'success' => 'Product updated with success !'
         
         ], $this-> successStatus); 

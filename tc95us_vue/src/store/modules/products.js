@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     productmessage:[],
@@ -31,6 +32,7 @@ const actions = {
         formdata.append("details", form.details);
         formdata.append("price", form.price);
         formdata.append("image", form.image);
+        formdata.append("image_name", form.image_name+'.'+form.extension);
         
      
         var requestOptions = {
@@ -40,7 +42,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/products", requestOptions)
+        fetch(`http://${url}/api/products`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('createProductMessage',result);
@@ -60,6 +62,7 @@ const actions = {
               "details": form.details,
               "price": form.price,
               "image": form.image,
+              "image_name": form.image_name+'.'+form.extension
             });
    
       var requestOptions = {
@@ -69,7 +72,7 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/products/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/products/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateProductMessage',result);
@@ -93,7 +96,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/products/${id}`, requestOptions)
+                  fetch(`http://${url}/api/products/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('ProductById',result);
@@ -114,7 +117,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/products/${id}`, requestOptions)
+      fetch(`http://${url}/api/products/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteProductById',result);
@@ -135,7 +138,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/products/", requestOptions)
+            fetch(`http://${url}/api/products/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllProducts',result))
             .catch(error => console.log('error', error));

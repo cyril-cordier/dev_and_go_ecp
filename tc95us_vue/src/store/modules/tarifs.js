@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     tarifmessage:[],
@@ -43,7 +44,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/tarifs", requestOptions)
+        fetch(`http://${url}/api/tarifs`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('createTarifMessage',result);
@@ -75,7 +76,7 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/tarifs/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/tarifs/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateTarifMessage',result);
@@ -99,7 +100,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/tarifs/${id}`, requestOptions)
+                  fetch(`http://${url}/api/tarifs/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('TarifById',result);
@@ -120,7 +121,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/tarifs/${id}`, requestOptions)
+      fetch(`http://${url}/api/tarifs/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteTarifById',result);
@@ -141,7 +142,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/tarifs/", requestOptions)
+            fetch(`http://${url}/api/tarifs/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllTarifs',result))
             .catch(error => console.log('error', error));

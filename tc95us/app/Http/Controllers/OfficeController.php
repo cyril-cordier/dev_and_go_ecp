@@ -25,7 +25,7 @@ class OfficeController extends Controller
         $validator = Validator::make($request->all(), [ 
             'name' => 'required',
             'fonction' => 'required',
-            //'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
 
@@ -36,23 +36,8 @@ class OfficeController extends Controller
 
         if ($request->hasFile('image')){
             $imagename=$request->image_name;
-            $fonction=$request->fonction;
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $fileNameToStore = $imagename;
-            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
-    
-            /* }else{
-                $fileNameToStore = 'noimage.png'; */
+            $path = $request->file('image')->storeAs('public/images/office', $imagename);
             }
-
-       /*  $image = time().'.'.$request->image->getClientOriginalExtension();
-
-        $request->image->move(public_path('images'), $image); */
-        /* import image */
-        $request->image_name = $fileNameToStore;
-        
 
         $input = $request->all(); 
        
@@ -63,6 +48,11 @@ class OfficeController extends Controller
 
     public function update(Request $request, Office $office){
         
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $path = $request->file('image')->storeAs('public/images/office', $imagename);
+            }
+
         $office->update($request->all());
         
         
@@ -72,6 +62,7 @@ class OfficeController extends Controller
             'name' => $office->name,
             'fonction' => $office->fonction,
             'image' => $office->image,
+            'image_name' => $office->image_name,
             'success' => 'Office user updated with success !'
         
         ], $this-> successStatus); 
@@ -86,7 +77,8 @@ class OfficeController extends Controller
             'id' => $office->id,
             'name' => $office->name,
             'fonction' => $office->fonction,
-            'image' => $office->image
+            'image' => $office->image,
+            'image_name' => $office->image_name,
         ]);
     }
 

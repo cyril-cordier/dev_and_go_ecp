@@ -25,7 +25,7 @@
                 <th>{{content.content}}</th>
                 <th>{{content.name}}</th>
                 <th>{{content.fonction}}</th>
-                <th>{{content.image}}</th>
+                <th><img :src="`http://localhost:8000/storage/images/content/${content.image_name}`"/></th>
                 <th>
                   <a href="#" class="icon">
                     <i v-on:click="onDeleteContent(content.id, index)" class="fa fa-trash"></i>
@@ -120,7 +120,7 @@
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit="onContentsubmit" class="sign-back">
+                <form @submit="onContentsubmit" class="sign-back" enctype="multipart/form-data">
                   <h1>Ajout content</h1>
                   <div class="signup-row">
                     
@@ -140,7 +140,9 @@
                   </div>
                   <div class="signup-row">
                     
-                    <textarea class="form-control" v-model="image" name="" value="" placeholder="Image"></textarea>
+                    <strong>Image:</strong>
+
+                        <input type="file" name="image" class="form-control" @change="onImageChange">
                   </div>
 
 
@@ -193,13 +195,20 @@
         content: '',
         name: '',
         fonction: '',
+        image_name:'',
+        extension:'',
         image: '',        
       }
     },
     methods: {
 
       ...mapActions(['createContent', 'editContent', 'fetchAllContents', 'fetchContentById', 'deleteContent']),
+       onImageChange(e){
+        //console.log(e.target.files[0]);
+        this.image = e.target.files[0];
+       },
       onContentsubmit(e) {
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         e.preventDefault();
         var obj = {
           'title': this.title,
@@ -207,6 +216,8 @@
           'name': this.name,
           'fonction': this.fonction,
           'image': this.image,
+          'image_name':Date.now(),
+          'extension': ext
 
         }
         this.createContent(obj);
@@ -215,13 +226,16 @@
       },
       onContentEdit(content) {
         //e.preventDefault();
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         var obj = {
           'id':content.id,
           'title': content.title,
           'content': content.content,
           'name': content.name,
           'fonction': content.fonction,
-          'image': content.image,
+          'image': this.image,
+          'image_name':Date.now(),
+          'extension': ext
         }
         this.editContent(obj);
         this.fetchAllContents();

@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     message:[],
@@ -42,7 +43,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/register", requestOptions)
+        fetch(`http://${url}/api/register`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('registerMessage',result);
@@ -68,7 +69,7 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch("http://localhost:8000/api/create", requestOptions)
+      fetch(`http://${url}/api/create`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('createMessage',result);
@@ -93,7 +94,7 @@ const actions = {
 
         console.log(commit);
 
-        fetch("http://localhost:8000/api/login", requestOptions)
+        fetch(`http://${url}/api/login`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('loginMessage',result);
@@ -125,7 +126,7 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/users/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/users/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateMessage',result);
@@ -148,7 +149,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/users/me/", requestOptions)
+            fetch(`http://${url}/api/users/me/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchUser',result))
             .catch(error => console.log('error', error));
@@ -165,7 +166,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+                  fetch(`http://${url}/api/users/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('UserById',result);
@@ -186,7 +187,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/users/${id}`, requestOptions)
+      fetch(`http://${url}/api/users/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteUserById',result);
@@ -207,7 +208,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/users/", requestOptions)
+            fetch(`http://${url}/api/users/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllUsers',result))
             .catch(error => console.log('error', error));

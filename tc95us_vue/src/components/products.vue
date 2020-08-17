@@ -23,7 +23,7 @@
                 <th>{{product.name}}</th>
                 <th>{{product.details}}</th>
                 <th>{{product.price}}</th>
-                <th>{{product.image}}</th>
+                <th><img :src="`http://localhost:8000/storage/images/product/${product.image_name}`"/></th>
                 <th>
                   <a href="#" class="icon">
                     <i v-on:click="onDeleteProduct(product.id, index)" class="fa fa-trash"></i>
@@ -109,7 +109,7 @@
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <form @submit="onProductsubmit" class="sign-back">
+                <form @submit="onProductsubmit" class="sign-back" enctype="multipart/form-data">
                   <h1>Ajout produit</h1>
                   <div class="signup-row">
                     
@@ -125,7 +125,9 @@
                   </div>
                   <div class="signup-row">
                     
-                    <input type="text" class="form-control" v-model="image" name="" value="" placeholder="Image">
+                    <strong>Image:</strong>
+
+                        <input type="file" name="image" class="form-control" @change="onImageChange">
                   </div>
 
 
@@ -178,19 +180,28 @@
         details: '',
         price: '',
         image: '',
+        image_name:'',
+        extension:''
         
       }
     },
     methods: {
 
       ...mapActions(['createProduct', 'editProduct', 'fetchAllProducts', 'fetchProductById', 'deleteProduct']),
+      onImageChange(e){
+        //console.log(e.target.files[0]);
+        this.image = e.target.files[0];
+      },
       onProductsubmit(e) {
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         e.preventDefault();
         var obj = {
           'name': this.name,
           'details': this.details,
           'price': this.price,
           'image': this.image,
+          'image_name':Date.now(),
+          'extension': ext
 
         }
         this.createProduct(obj);
@@ -198,6 +209,7 @@
 
       },
       onProductEdit(product) {
+        let ext = this.image.name.substring(this.image.name.lastIndexOf('.') + 1);
         //e.preventDefault();
         var obj = {
           'id':product.id,
@@ -205,6 +217,8 @@
           'details': product.details,
           'price': product.price,
           'image': product.image,
+          'image_name':Date.now(),
+          'extension': ext
         }
         this.editProduct(obj);
         this.fetchAllProducts();

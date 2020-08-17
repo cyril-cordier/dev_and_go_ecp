@@ -1,4 +1,5 @@
 const token = window.localStorage.getItem('token') || "";
+var url = `localhost:8000`;
 
 const state = {
     challengeusermessage:[],
@@ -44,7 +45,7 @@ const actions = {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:8000/api/challengeusers", requestOptions)
+        fetch(`http://${url}/api/challengeusers`, requestOptions)
           .then(response => response.json())
           .then(result =>  {
               commit('createChallengeuserMessage',result);
@@ -78,7 +79,7 @@ const actions = {
         redirect: 'follow'
       };
       
-      fetch(`http://localhost:8000/api/challengeusers/${form.id}`, requestOptions)
+      fetch(`http://${url}/api/challengeusers/${form.id}`, requestOptions)
         .then(response => response.json())
         .then(result =>  {
             commit('updateChallengeuserMessage',result);
@@ -102,7 +103,7 @@ const actions = {
                   redirect: 'follow'
                   };
       
-                  fetch(`http://localhost:8000/api/challengeusers/${id}`, requestOptions)
+                  fetch(`http://${url}/api/challengeusers/${id}`, requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     commit('ChallengeuserById',result);
@@ -123,7 +124,7 @@ const actions = {
       redirect: 'follow'
       };
 
-      fetch(`http://localhost:8000/api/challengeusers/${id}`, requestOptions)
+      fetch(`http://${url}/api/challengeusers/${id}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         commit('deleteChallengeuserById',result);
@@ -144,7 +145,7 @@ const actions = {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:8000/api/challengeusers/", requestOptions)
+            fetch(`http://${url}/api/challengeusers/`, requestOptions)
             .then(response => response.json())
             .then(result => commit('fetchAllChallengeusers',result))
             .catch(error => console.log('error', error));

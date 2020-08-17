@@ -29,13 +29,19 @@ class EventController extends Controller
             'date' => 'required', 
             'hour' => 'required', 
             'price' => 'required',
-            'image' => 'required', 
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
 
         if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
+        /* import image */
+
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $path = $request->file('image')->storeAs('public/images/event', $imagename);
+            }
         $input = $request->all(); 
        
         Events::create($input);
@@ -45,6 +51,10 @@ class EventController extends Controller
 
     public function update(Request $request, Events $event){
 
+        if ($request->hasFile('image')){
+            $imagename=$request->image_name;
+            $path = $request->file('image')->storeAs('public/images/event', $imagename);
+            }
         $event->update($request->all());
             
 
@@ -57,6 +67,7 @@ class EventController extends Controller
             'hour' => $event->hour,
             'price' => $event->price,
             'image' => $event->image,
+            'image_name' => $office->image_name,
             'success' => 'event updated with success !'
         
         ], $this-> successStatus); 
@@ -76,6 +87,7 @@ class EventController extends Controller
             'hour' => $event->hour,
             'price' => $event->price,
             'image' => $event->image,
+            'image_name' => $event->image_name,
         ]);
     }
 
