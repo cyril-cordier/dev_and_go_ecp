@@ -80,7 +80,7 @@ public $successStatus = 200;
         ], $this-> successStatus); 
 
     } 
-
+// fonction update
     public function update(Request $request, User $user){
        
         $validator = Validator::make($request->all(),[ 

@@ -57,7 +57,7 @@ const actions = {
           .catch(error => console.log('error', error));
     },
     
-    // EDIT
+    // EDIT event
     async editEvent({commit},form){
       var myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`);
