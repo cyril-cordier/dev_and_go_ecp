@@ -17,10 +17,10 @@ class CreateTarifsTable extends Migration
             $table->id();
             $table->string('type');
             $table->string('category');
-            $table->string('price1');
-            $table->string('price2');
-            $table->string('price3');
-            $table->string('details');
+            $table->string('price1')->nullable();
+            $table->string('price2')->nullable();
+            $table->string('price3')->nullable();
+            $table->string('details')->nullable();
             $table->timestamps();
         });
     }

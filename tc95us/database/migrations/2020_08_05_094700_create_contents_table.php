@@ -18,9 +18,9 @@ class CreateContentsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('name');
-            $table->string('fonction');
-            $table->string('image');
-            $table->string('image_name');
+            $table->string('fonction')->nullable();
+            $table->string('image')->nullable();
+            $table->string('image_name')->nullable();
             $table->timestamps();
         });
     }

@@ -21,8 +21,8 @@ class CreateEventsTable extends Migration
             $table->string('date');
             $table->string('hour');
             $table->string('price');
-            $table->string('image');
-            $table->string('image_name');
+            $table->string('image')->nullable();
+            $table->string('image_name')->nullable();
             $table->timestamps();
         });
     }

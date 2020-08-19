@@ -18,7 +18,7 @@ class CreateChampionnatsTable extends Migration
             $table->string('date');
             $table->string('competition');
             $table->string('match');
-            $table->string('score');
+            $table->string('score')->nullable();
             $table->timestamps();
         });
     }
