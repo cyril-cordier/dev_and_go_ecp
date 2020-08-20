@@ -26,7 +26,7 @@ class ContentController extends Controller
             'title' => 'required',
             'content' => 'required', 
             'name' => 'required', 
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            
         ]);
 
 

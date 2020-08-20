@@ -24,8 +24,8 @@ class OfficeController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [ 
             'name' => 'required',
-            'fonction' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'function' => 'required',
+            
         ]);
 
 
@@ -60,7 +60,7 @@ class OfficeController extends Controller
         return response()->json([
             'id' => $office->id,
             'name' => $office->name,
-            'fonction' => $office->fonction,
+            'function' => $office->function,
             'image' => $office->image,
             'image_name' => $office->image_name,
             'success' => 'Office user updated with success !'
@@ -76,7 +76,7 @@ class OfficeController extends Controller
         return response()->json([
             'id' => $office->id,
             'name' => $office->name,
-            'fonction' => $office->fonction,
+            'function' => $office->function,
             'image' => $office->image,
             'image_name' => $office->image_name,
         ]);

@@ -18,11 +18,11 @@ class CreateChallengeUsersTable extends Migration
             $table->string('challengename');
             $table->string('contact');
             $table->string('ranking');
-            $table->string('points');
-            $table->string('nbmatchs');
-            $table->string('matchaverage');
-            $table->string('setaverage');
-            $table->string('gameaverage');
+            $table->integer('points');
+            $table->integer('nbmatchs');
+            $table->integer('matchaverage');
+            $table->integer('setaverage');
+            $table->integer('gameaverage');
             $table->string('visible');
             $table->timestamps();
         });

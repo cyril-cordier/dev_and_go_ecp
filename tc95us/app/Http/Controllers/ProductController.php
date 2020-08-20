@@ -27,7 +27,7 @@ class ProductController extends Controller
             'name' => 'required', 
             'details' => 'required', 
             'price' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
+            
         ]);
 
 
