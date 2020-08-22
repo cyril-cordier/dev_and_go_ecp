@@ -21,7 +21,7 @@ public $successStatus = 200;
             return response()->json(['success' => $success], $this-> successStatus); 
         } 
         else{ 
-            return response()->json(['error'=>'Email ou mot de passe erroné'], 401); 
+            return response()->json(['error'=>'Email ou mot de passe'], 401); 
         } 
     }
 /** 
@@ -35,7 +35,7 @@ public $successStatus = 200;
             'challengename' => ['unique:users'],
             'firstname' => 'required', 
             'lastname' => 'required',
-            'email' => ['unique:users|required|email'], 
+            'email' => ['unique:users', 'required', 'email'], 
             'password' => 'required', 
             'c_password' => 'required|same:password',
         ]);
