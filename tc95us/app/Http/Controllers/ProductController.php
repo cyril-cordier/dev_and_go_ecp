@@ -44,7 +44,7 @@ class ProductController extends Controller
        
         Products::create($input);
         
-        return response()->json(['success'=>'Product successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Produit ajouté avec succès'], $this-> successStatus); 
     }
 
     public function update(Request $request, Products $product){
@@ -65,7 +65,7 @@ class ProductController extends Controller
             'price' => $product->price,
             'image' => $product->image,
             'image_name' => $product->image_name,
-            'success' => 'Product updated with success !'
+            'success' => 'Produit mis à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -89,7 +89,7 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json([
-            'success' => 'Product successfully deleted'
+            'success' => 'Produit supprimé'
         
         ], $this-> successStatus); 
 

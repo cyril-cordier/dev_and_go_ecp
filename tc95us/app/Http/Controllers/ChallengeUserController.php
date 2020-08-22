@@ -37,7 +37,7 @@ class ChallengeUserController extends Controller
        
         ChallengeUsers::create($input);
         
-        return response()->json(['success'=>'challenge user successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Joueur créé avec succès'], $this-> successStatus); 
     }
 
     public function update(Request $request, ChallengeUsers $challengeuser){
@@ -57,7 +57,7 @@ class ChallengeUserController extends Controller
             'setaverage' => $challengeuser->setaverage,
             'gameaverage' => $challengeuser->gameaverage,
             'visible' => $challengeuser->visible,
-            'success' => 'challenge user updated with success !'
+            'success' => 'Joueur mis à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -86,7 +86,7 @@ class ChallengeUserController extends Controller
         $challengeuser->delete();
 
         return response()->json([
-            'success' => 'challenge user successfully deleted'
+            'success' => 'Joueur supprimé'
         
         ], $this-> successStatus); 
 

@@ -43,7 +43,7 @@ class ContentController extends Controller
        
         Contents::create($input);
         
-        return response()->json(['success'=>'content successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Contenu créé avec succès'], $this-> successStatus); 
     }
 
     public function update(Request $request, Contents $content){
@@ -64,7 +64,7 @@ class ContentController extends Controller
             'fonction' => $content->fonction,
             'image' => $content->image,
             'image_name' => $office->image_name,
-            'success' => 'Content updated with success !'
+            'success' => 'Contenu mis à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -90,7 +90,7 @@ class ContentController extends Controller
         $content->delete();
 
         return response()->json([
-            'success' => 'content successfully deleted'
+            'success' => 'Contenu supprimé'
         
         ], $this-> successStatus); 
 

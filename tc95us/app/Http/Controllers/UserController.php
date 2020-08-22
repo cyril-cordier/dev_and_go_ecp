@@ -21,7 +21,7 @@ public $successStatus = 200;
             return response()->json(['success' => $success], $this-> successStatus); 
         } 
         else{ 
-            return response()->json(['error'=>'Wrong Email or Password'], 401); 
+            return response()->json(['error'=>'Email ou mot de passe erroné'], 401); 
         } 
     }
 /** 
@@ -35,7 +35,7 @@ public $successStatus = 200;
             'challengename' => ['unique:users'],
             'firstname' => 'required', 
             'lastname' => 'required',
-            'email' => ['unique:users','required','email'], 
+            'email' => ['unique:users|required|email'], 
             'password' => 'required', 
             'c_password' => 'required|same:password',
         ]);
@@ -50,7 +50,7 @@ public $successStatus = 200;
         
 /*         $success['token'] =  $user->createToken('MyApp')-> accessToken; 
         $success['name'] =  $user->name; */
-        return response()->json(['success'=>'You can now log in '], $this-> successStatus); 
+        return response()->json(['success'=>'Vous pouvez maintenant vous connecter '], $this-> successStatus); 
     }
 
      public function updateUser(Request $request){
@@ -75,7 +75,7 @@ public $successStatus = 200;
             'lastname' => $user->lastname,
             'email' => $user->email,
             'admin' => $user->admin,
-            'success' => 'User updated with success !'
+            'success' => 'Utilisateur mis à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -103,7 +103,7 @@ public $successStatus = 200;
             'lastname' => $user->lastname,
             'email' => $user->email,
             'admin' => $user->admin,
-            'success' => 'User updated with success !'
+            'success' => 'Utilisateur mis à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -114,7 +114,7 @@ public $successStatus = 200;
         $user->delete();
 
         return response()->json([
-            'success' => 'User successfully deleted'
+            'success' => 'Utilisateur supprimé'
         
         ], $this-> successStatus); 
 

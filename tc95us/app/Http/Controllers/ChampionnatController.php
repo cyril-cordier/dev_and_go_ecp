@@ -37,7 +37,7 @@ class ChampionnatController extends Controller
        
         Championnats::create($input);
         
-        return response()->json(['success'=>'match successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Rencontre créée avec succès'], $this-> successStatus); 
     }
 
     public function update(Request $request, Championnats $championnat){
@@ -52,7 +52,7 @@ class ChampionnatController extends Controller
             'competition' => $championnat->competition,
             'match' => $championnat->match,
             'score' => $championnat->score,
-            'success' => 'match updated with success !'
+            'success' => 'Rencontre mise à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -76,7 +76,7 @@ class ChampionnatController extends Controller
         $match->delete();
 
         return response()->json([
-            'success' => 'match successfully deleted'
+            'success' => 'Rencontre supprimée'
         
         ], $this-> successStatus); 
 

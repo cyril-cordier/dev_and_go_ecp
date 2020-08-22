@@ -46,7 +46,7 @@ class EventController extends Controller
        
         Events::create($input);
         
-        return response()->json(['success'=>'event successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Evènement/animation créé avec succès'], $this-> successStatus); 
     }
 
     public function update(Request $request, Events $event){
@@ -68,7 +68,7 @@ class EventController extends Controller
             'price' => $event->price,
             'image' => $event->image,
             'image_name' => $office->image_name,
-            'success' => 'event updated with success !'
+            'success' => 'Evènement/animation créé avec succès !'
         
         ], $this-> successStatus); 
 
@@ -96,7 +96,7 @@ class EventController extends Controller
         $event->delete();
 
         return response()->json([
-            'success' => 'event successfully deleted'
+            'success' => 'Evènement/animation supprimé'
         
         ], $this-> successStatus); 
 

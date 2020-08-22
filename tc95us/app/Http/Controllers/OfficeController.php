@@ -43,7 +43,7 @@ class OfficeController extends Controller
        
         Office::create($input);
         
-        return response()->json(['success'=>'Office user successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Membre du bureau créé avec succès'], $this-> successStatus); 
     }
 
     public function update(Request $request, Office $office){
@@ -63,7 +63,7 @@ class OfficeController extends Controller
             'function' => $office->function,
             'image' => $office->image,
             'image_name' => $office->image_name,
-            'success' => 'Office user updated with success !'
+            'success' => 'Membre du bureau modifié avec succès !'
         
         ], $this-> successStatus); 
 
@@ -87,7 +87,7 @@ class OfficeController extends Controller
         $office->delete();
 
         return response()->json([
-            'success' => 'challenge user successfully deleted'
+            'success' => 'Membre du bureau supprimé'
         
         ], $this-> successStatus); 
 

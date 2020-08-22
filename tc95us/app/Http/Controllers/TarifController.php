@@ -35,7 +35,7 @@ class TarifController extends Controller
        
         Tarifs::create($input);
         
-        return response()->json(['success'=>'tarif successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Tarif ajouté'], $this-> successStatus); 
     }
 
     public function update(Request $request, Tarifs $tarif){
@@ -51,7 +51,7 @@ class TarifController extends Controller
             'price2' => $tarif->price2,
             'price3' => $tarif->price3,
             'details' => $tarif->details,
-            'success' => 'tarif updated with success !'
+            'success' => 'Tarif mis à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -77,7 +77,7 @@ class TarifController extends Controller
         $tarif->delete();
 
         return response()->json([
-            'success' => 'tarif successfully deleted'
+            'success' => 'Tarif supprimé'
         
         ], $this-> successStatus); 
 

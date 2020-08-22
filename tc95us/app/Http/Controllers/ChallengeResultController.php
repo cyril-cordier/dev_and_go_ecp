@@ -37,7 +37,7 @@ class ChallengeResultController extends Controller
        
         Challenge::create($input);
         
-        return response()->json(['success'=>'challenge result successfully added'], $this-> successStatus); 
+        return response()->json(['success'=>'Résultat match de challenge créé avec succès'], $this-> successStatus); 
     }
 
     public function update(Request $request, Challenge $challengeresult){
@@ -59,7 +59,7 @@ class ChallengeResultController extends Controller
             'pointsW' => $challengeresult->pointsW,
             'pointsL' => $challengeresult->pointsL,
             'details' => $challengeresult->details,
-            'success' => 'challenge result updated with success !'
+            'success' => 'Résultat match de challenge mis à jour avec succès !'
         
         ], $this-> successStatus); 
 
@@ -90,7 +90,7 @@ class ChallengeResultController extends Controller
         $challengeresult->delete();
 
         return response()->json([
-            'success' => 'challenge result successfully deleted'
+            'success' => 'Résultat match de challenge supprimé'
         
         ], $this-> successStatus); 
 
