@@ -16,7 +16,9 @@ class ContentController extends Controller
        return $contents;
 
     }
-
+    public function visitor(Contents $content){
+        return $content;
+    }
     public function show(Contents $content){
         return $content;
     }
